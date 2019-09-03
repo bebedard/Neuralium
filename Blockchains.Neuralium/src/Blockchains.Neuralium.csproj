@@ -1,0 +1,59 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <!-- https://docs.microsoft.com/en-us/dotnet/core/tools/project-json-to-csproj -->
+  <PropertyGroup>
+
+    <TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
+    <OutputType>Library</OutputType>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <DefineConstants>$(DefineConstants);SILENT_EXCEPTIONS</DefineConstants>
+    <LangVersion>latest</LangVersion>
+    <RootNamespace>Blockchains.Neuralium</RootNamespace>
+    <AssemblyName>Blockchains.Neuralium</AssemblyName>
+    <TargetFrameworks>netstandard2.0;netcoreapp2.2</TargetFrameworks>
+    
+  </PropertyGroup>
+  <PropertyGroup>
+    <ServerGarbageCollection>true</ServerGarbageCollection>
+    <ConcurrentGarbageCollection>true</ConcurrentGarbageCollection>
+    <RetainVMGarbageCollection>true</RetainVMGarbageCollection>
+    <ThreadPoolMinThreads>4</ThreadPoolMinThreads>
+    <ThreadPoolMaxThreads>25</ThreadPoolMaxThreads>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    
+    <DebugType>none</DebugType>
+  </PropertyGroup>
+  <!-- code to copy only our dlls to another folder -->
+  <!--<ItemGroup>-->
+    <!--<ModuleFiles Include="$(TargetDir)*.dll;$(TargetDir)*.json;$(TargetDir)*.config" Exclude="$(TargetDir)System*.dll;$(TargetDir)Microsoft*.dll" DestinationPath="$(ProjectDir)bin/Debug/dockercopy/%(Filename)%(Extension)">-->
+    <!--</ModuleFiles>-->
+  <!--</ItemGroup>-->
+  <!--<Target Name="PublishModule" AfterTargets="PostBuildEvent" Inputs="@(ModuleFiles)" Outputs="@(ModuleFiles->'%(DestinationPath)')">-->
+    <!--<Delete Files="$(ProjectDir)bin/Debug/dockercopy/**/*" />-->
+    <!--<WriteLinesToFile File="$(ProjectDir)bin/Debug/netcoreapp2.1/app_offline.htm" />-->
+    <!--<Copy SourceFiles="@(ModuleFiles)" DestinationFiles="@(ModuleFiles->'%(DestinationPath)')" />-->
+    <!--<Delete Files="$(ProjectDir)bin/Debug/netcoreapp2.1/app_offline.htm" />-->
+  <!--</Target>-->
+  <ItemGroup>
+    <Folder Include="Classes\General" />
+    <Folder Include="Classes\NeuraliumChain\Dal\Sqlite\AccountSnapshots\Storage\Base" />
+    <Folder Include="Classes\NeuraliumChain\DataStructures\AccreditationCertificates\SAFU" />
+    <Folder Include="Classes\NeuraliumChain\Workflows\Tasks\Specialized" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Neuralia.Blockchains.Common" Version="1.0.0" />
+    <PackageReference Include="Neuralia.Blockchains.Tools" Version="1.0.0" />
+    <PackageReference Include="Neuralia.BouncyCastle" Version="1.0.0" />
+    <PackageReference Include="Neuralia.STUN" Version="1.0.0" />
+    <PackageReference Include="Neuralia.System.Data.HashFunction.xxHash" Version="1.0.0" />
+  </ItemGroup>
+    <PropertyGroup Condition="'$(SolutionDir)' == '' or&#xA;                     '$(SolutionDir)' == '*undefined*'">
+    <SolutionDir>..\..\</SolutionDir>
+  </PropertyGroup>
+  <Import Project="$(SolutionDir)CommonSettings.targets" />
+
+
+</Project>

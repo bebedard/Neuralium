@@ -1,0 +1,58 @@
+{
+  "AppSettings": {
+    
+    "NeuraliumChainConfiguration" : {
+     
+    },
+  },
+  "Logging": {
+    "IncludeScopes": false,
+    "Debug": {
+      "LogLevel": {
+        "Default": "Information",
+        "Microsoft": "Information"
+      }
+    },
+    "Console": {
+      "LogLevel": {
+        "Default": "Information",
+        "Microsoft": "Information"
+      }
+    }
+  },
+  "Serilog": {
+    "Using":  ["Serilog.Sinks.Console", "Neuralium.Shell"],
+    "MinimumLevel":{
+      "Default": "Information",
+      "Override": {
+        "Microsoft": "Information",
+        "System": "Warning"
+      }
+    },
+    "WriteTo": [
+      {
+        "Name": "RpcEventLogSink",
+        "Args": {
+          "outputTemplate": "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj} {Properties}{NewLine}{Exception}"
+        }
+      },
+      {
+        "Name": "Async",
+        "Args": {
+          "configure": [
+            {
+              "Name": "Console",
+              "Args": {
+                "theme": "Serilog.Sinks.SystemConsole.Themes.AnsiConsoleTheme::Code, Serilog.Sinks.Console",
+                "outputTemplate": "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj} {Properties}{NewLine}{Exception}"
+              }
+            }
+          ]
+        }
+      }],
+    "Enrich": ["FromLogContext", "WithThreadId" , "WithExceptionDetails"],
+    "Properties": {
+
+    }
+  }
+}
