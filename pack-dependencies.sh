@@ -4,7 +4,6 @@ mkdir deps/neuralia.blockchains.tools/local-source
 mkdir local-source
 mkdir deps/Neuralia.Blockchain/local-source
 mkdir deps/Neuralia.BouncyCastle/local-source
-mkdir deps/Neuralia.BouncyCastle/local-source
 
 cd deps/Neuralia.Data.HashFunction.xxHash
 
