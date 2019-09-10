@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd Dependencies/Neuralia.Data.HashFunction.xxHash
+cd deps/Neuralia.Data.HashFunction.xxHash
 
 dotnet restore
 
@@ -15,10 +15,10 @@ else
     echo "build failed"
 fi
 
-cp Neuralia.Data.HashFunction.xxHash.1.0.0.nupkg ../Dependencies/neuralia.blockchains.tools/nuget-source/
+cp Neuralia.Data.HashFunction.xxHash.1.0.0.nupkg ../deps/neuralia.blockchains.tools/nuget-source/
 cp Neuralia.Data.HashFunction.xxHash.1.0.0.nupkg ../../nuget-source/
-cp Neuralia.Data.HashFunction.xxHash.1.0.0.nupkg ../Dependencies/Neuralia.Blockchain/nuget-source/
-cp Neuralia.Data.HashFunction.xxHash.1.0.0.nupkg ../Dependencies/Neuralia.BouncyCastle/nuget-source/
+cp Neuralia.Data.HashFunction.xxHash.1.0.0.nupkg ../deps/Neuralia.Blockchain/nuget-source/
+cp Neuralia.Data.HashFunction.xxHash.1.0.0.nupkg ../deps/Neuralia.BouncyCastle/nuget-source/
 
 cd ../neuralia.blockchains.tools
 
@@ -35,8 +35,8 @@ else
     echo "build failed"
 fi
 
-cp Neuralia.Blockchains.Tools.1.0.0.nupkg ../Dependencies/Neuralia.Blockchain/nuget-source/
-cp Neuralia.Blockchains.Tools.1.0.0.nupkg ../Dependencies/euralia.BouncyCastle/nuget-source/
+cp Neuralia.Blockchains.Tools.1.0.0.nupkg ../deps/Neuralia.Blockchain/nuget-source/
+cp Neuralia.Blockchains.Tools.1.0.0.nupkg ../deps/euralia.BouncyCastle/nuget-source/
 cp Neuralia.Blockchains.Tools.1.0.0.nupkg ../../nuget-source/
 
 cd ../Neuralia.STUN
@@ -54,7 +54,7 @@ else
     echo "build failed"
 fi
 
-cp Neuralia.STUN.1.0.0.nupkg ../Dependencies/Neuralia.Blockchain/nuget-source/
+cp Neuralia.STUN.1.0.0.nupkg ../deps/Neuralia.Blockchain/nuget-source/
 cp Neuralia.STUN.1.0.0.nupkg ../../nuget-source/
 
 
@@ -73,7 +73,7 @@ else
     echo "build failed"
 fi
 
-cp Neuralia.BouncyCastle.1.0.0.nupkg ../Dependencies/Neuralia.Blockchain/nuget-source/
+cp Neuralia.BouncyCastle.1.0.0.nupkg ../deps/Neuralia.Blockchain/nuget-source/
 cp Neuralia.BouncyCastle.1.0.0.nupkg ../../nuget-source/
 
 cd ../neuralia.Blockchain/nuget-source/

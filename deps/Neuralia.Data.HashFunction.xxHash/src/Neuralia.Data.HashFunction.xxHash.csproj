@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
+    <OutputType>Library</OutputType>
+    <Description>Data.HashFunction implementation of xxHash (https://code.google.com/p/xxhash/).</Description>
+    <Copyright>Copyright 2019</Copyright>
+    <AssemblyTitle>Neuralia.Data.HashFunction.xxHash</AssemblyTitle>
+    <VersionPrefix>1.0.0</VersionPrefix>
+    <Authors>Neuralia Technologies, Data.HashFunction Developers</Authors>
+    <TargetFrameworks>netstandard2.0;netcoreapp2.2</TargetFrameworks>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <AssemblyName>Neuralia.Data.HashFunction.xxHash</AssemblyName>
+    <PackageId>Neuralia.Data.HashFunction.xxHash</PackageId>
+    <PackageTags>xxHash;hash;function</PackageTags>
+    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>full</DebugType>
+    <DebugSymbols>True</DebugSymbols>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="1.2.2" />
+    <PackageReference Include="System.Memory" Version="4.5.2" />
+    <PackageReference Include="System.Runtime.Numerics" Version="4.3.0" />
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+</Project>
