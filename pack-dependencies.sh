@@ -3,6 +3,8 @@
 cd deps/Neuralia.Data.HashFunction.xxHash
 
 if test -f "Neuralia.Data.HashFunction.xxHash.1.0.0.nupkg"; then
+echo "file exists."
+else
 	dotnet restore
 	if dotnet build -c Release --no-incremental ; then
 		if  dotnet pack -c Release -o ../ ; then
@@ -24,6 +26,8 @@ cp Neuralia.Data.HashFunction.xxHash.1.0.0.nupkg ../Neuralia.BouncyCastle/nuget-
 cd ../neuralia.blockchains.tools
 
 if test -f "neuralia.Blockchains.Tools.1.0.0.nupkg"; then
+echo "file exists."
+else
 	dotnet restore
 	if dotnet build -c Release --no-incremental ; then
 		if  dotnet pack -c Release -o ../ ; then
@@ -44,6 +48,8 @@ cp neuralia.Blockchains.Tools.1.0.0.nupkg ../../nuget-source/
 cd ../Neuralia.STUN
 
 if test -f "Neuralia.STUN.1.0.0.nupkg"; then
+echo "file exists."
+else
 	dotnet restore
 	if dotnet build -c Release --no-incremental ; then
 		if  dotnet pack -c Release -o ../ ; then
@@ -57,13 +63,17 @@ if test -f "Neuralia.STUN.1.0.0.nupkg"; then
 	fi
 fi
 
+
 cp Neuralia.STUN.1.0.0.nupkg ../Neuralia.Blockchain/nuget-source/
 cp Neuralia.STUN.1.0.0.nupkg ../../nuget-source/
 
 
-cd ../neuralia.BouncyCastle/nuget-source/
-
+cd ../
 if test -f "Neuralia.BouncyCastle.1.0.0.nupkg"; then
+cd Neuralia.BouncyCastle
+echo "file exists."
+else
+cd Neuralia.BouncyCastle
 	dotnet restore
 	if dotnet build Neuralia.BouncyCastle.sln -c Release --no-incremental ; then
 		if  dotnet pack Neuralia.BouncyCastle.sln -c Release -o ../ ; then
@@ -77,12 +87,15 @@ if test -f "Neuralia.BouncyCastle.1.0.0.nupkg"; then
 	fi
 fi
 
-cp Neuralia.BouncyCastle.1.0.0.nupkg ../Neuralia.Blockchain/nuget-source/
-cp Neuralia.BouncyCastle.1.0.0.nupkg ../../nuget-source/
+cd ../
+cp Neuralia.BouncyCastle.1.0.0.nupkg Neuralia.Blockchain/nuget-source/
+cp Neuralia.BouncyCastle.1.0.0.nupkg ../nuget-source/
 
-cd ../neuralia.Blockchain/nuget-source/
+cd Neuralia.Blockchain
 
-if [test -f "Neuralia.Blockchains.Common.1.0.0.nupkg"] & [test -f "Neuralia.Blockchains.Core.1.0.0.nupkg"]; then
+if test -f "Neuralia.Blockchains.Common.1.0.0.nupkg" & test -f "Neuralia.Blockchains.Core.1.0.0.nupkg"; then
+echo "file exists."
+else
 	dotnet restore
 	if dotnet build -c Release --no-incremental ; then
 		if  dotnet pack -c Release -o ../../ ; then
