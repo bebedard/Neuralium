@@ -18,9 +18,12 @@ Run the following bash script in the base directory
 >./pack-dependencies.sh
 
 Then, simply invoke the right build file for your needs
+
 >cd targets
 > ./linux.sh
 
 or if you want to build for arm
+
 >./arm.sh
+
 this will produce the executable in the folder /build
