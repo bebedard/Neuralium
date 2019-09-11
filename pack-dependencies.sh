@@ -1,6 +1,14 @@
 #!/bin/bash
 
-cd deps/Neuralia.Data.HashFunction.xxHash
+mkdir deps
+cd deps
+git clone https://github.com/Neuralia/Neuralia.Blockchains.Tools
+git clone https://github.com/Neuralia/Neuralia.Data.HashFunction.xxHash
+git clone https://github.com/Neuralia/Neuralia.Blockchain
+git clone https://github.com/Neuralia/Neuralia.BouncyCastle
+git clone https://github.com/Neuralia/Neuralia.STUN
+
+cd Neuralia.Data.HashFunction.xxHash
 
 if test -f "Neuralia.Data.HashFunction.xxHash.1.0.0.nupkg"; then
 echo "file exists."
