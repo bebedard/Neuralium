@@ -47,7 +47,10 @@ namespace Neuralium.Shell.Classes.Configuration {
 		[Option("skip-digest-hash-verification", Default = false, Required = false, HelpText = "if set, the digest hash verification will be skiped.")]
 		public bool SkipDigestHashVerification { get; set; }
 
-		[Option('p', "port", Default = null, Required = false, HelpText = "Will skip the RPC server startup if set.")]
+        [Option("ip", Default = null, Required = false, HelpText = "Will bind to the specified ip address if set.")]
+        public string IpAdrress { get; set; }
+
+        [Option('p', "port", Default = null, Required = false, HelpText = "Will skip the RPC server startup if set.")]
 		public int? Port { get; set; }
 
 		// // Omitting long name, defaults to name of property, ie "--verbose"

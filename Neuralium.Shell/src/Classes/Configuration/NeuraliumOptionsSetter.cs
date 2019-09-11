@@ -41,7 +41,12 @@ namespace Neuralium.Shell.Classes.Configuration {
 				appSettings.port = cmdOptions.Port.Value;
 			}
 
-			if(!string.IsNullOrWhiteSpace(cmdOptions.SerializationType)) {
+            if (cmdOptions.IpAdrress != null)
+            {
+                appSettings.ip = cmdOptions.IpAdrress;
+            }
+
+            if (!string.IsNullOrWhiteSpace(cmdOptions.SerializationType)) {
 				if(cmdOptions.SerializationType.ToUpper() == "MASTER") {
 					appSettings.SerializationType = AppSettingsBase.SerializationTypes.Master;
 				} else if(cmdOptions.SerializationType.ToUpper() == "FEEDER") {
