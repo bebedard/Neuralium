@@ -37,7 +37,7 @@
     <PackageReference Include="Neuralia.Blockchains.Tools" Version="1.0.0" />
     <PackageReference Include="Neuralia.BouncyCastle" Version="1.0.0" />
     <PackageReference Include="Neuralia.STUN" Version="1.0.0" />
-    <PackageReference Include="Neuralia.System.Data.HashFunction.xxHash" Version="1.0.0" />
+    <PackageReference Include="Neuralia.Data.HashFunction.xxHash" Version="1.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
     <PackageReference Include="LiteDB" Version="4.1.4" />
     <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />

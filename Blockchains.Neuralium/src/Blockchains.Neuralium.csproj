@@ -48,7 +48,7 @@
     <PackageReference Include="Neuralia.Blockchains.Tools" Version="1.0.0" />
     <PackageReference Include="Neuralia.BouncyCastle" Version="1.0.0" />
     <PackageReference Include="Neuralia.STUN" Version="1.0.0" />
-    <PackageReference Include="Neuralia.System.Data.HashFunction.xxHash" Version="1.0.0" />
+    <PackageReference Include="Neuralia.Data.HashFunction.xxHash" Version="1.0.0" />
   </ItemGroup>
     <PropertyGroup Condition="'$(SolutionDir)' == '' or&#xA;                     '$(SolutionDir)' == '*undefined*'">
     <SolutionDir>..\..\</SolutionDir>
