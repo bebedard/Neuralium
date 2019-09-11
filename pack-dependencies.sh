@@ -42,9 +42,9 @@ else
 	fi
 fi
 
-cp neuralia.Blockchains.Tools.1.0.0.nupkg ../Neuralia.Blockchain/nuget-source/
-cp neuralia.Blockchains.Tools.1.0.0.nupkg ../Neuralia.BouncyCastle/nuget-source/
-cp neuralia.Blockchains.Tools.1.0.0.nupkg ../../nuget-source/
+cp Neuralia.Blockchains.Tools.1.0.0.nupkg ../Neuralia.Blockchain/nuget-source/
+cp Neuralia.Blockchains.Tools.1.0.0.nupkg ../Neuralia.BouncyCastle/nuget-source/
+cp Neuralia.Blockchains.Tools.1.0.0.nupkg ../../nuget-source/
 
 cd ../Neuralia.STUN
 
