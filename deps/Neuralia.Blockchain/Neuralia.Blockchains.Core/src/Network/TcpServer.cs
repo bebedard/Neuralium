@@ -58,7 +58,7 @@ namespace Neuralia.Blockchains.Core.Network {
 
 		public delegate void MessageBytesReceived(TcpServer listener, ITcpConnection connection, IByteArray buffer);
 
-		protected readonly List<ITcpConnection> connections = new List<ITcpConnection>();
+        protected readonly List<ITcpConnection> connections = new List<ITcpConnection>();
 
 		private readonly TcpConnection.ExceptionOccured exceptionCallback;
 
@@ -73,8 +73,27 @@ namespace Neuralia.Blockchains.Core.Network {
 
 		public TcpServer(NetworkEndPoint endPoint, TcpConnection.ExceptionOccured exceptionCallback, ShortExclusiveOption<TcpConnection.ProtocolMessageTypes> protocolMessageFilters = null) {
 			this.exceptionCallback = exceptionCallback;
+            endPoint.EndPoint.Address = IPAddress.Parse(GlobalSettings.ApplicationSettings.ip);
 			this.EndPoint = endPoint.EndPoint;
-			this.IPMode = endPoint.IPMode;
+            IPAddress address;
+            if (IPAddress.TryParse(GlobalSettings.ApplicationSettings.ip, out address))
+            {
+                switch (address.AddressFamily)
+                {
+                    case AddressFamily.InterNetwork:
+                        endPoint.IPMode = IPMode.IPv4;
+                        break;
+                    case AddressFamily.InterNetworkV6:
+                        endPoint.IPMode = IPMode.IPv6;
+                        break;
+                    default:
+                        endPoint.IPMode = IPMode.IPv4;
+                        break;
+                }
+            }
+
+            this.IPMode = endPoint.IPMode;
+            
 
 			if(protocolMessageFilters == null) {
 				this.protocolMessageFilters = TcpConnection.ProtocolMessageTypes.All;

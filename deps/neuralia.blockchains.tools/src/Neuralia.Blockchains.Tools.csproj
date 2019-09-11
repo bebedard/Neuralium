@@ -6,10 +6,10 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <DefineConstants>$(DefineConstants);SILENT_EXCEPTIONS</DefineConstants>
     <LangVersion>latest</LangVersion>
-    <RootNamespace>neuralia.Blockchains.Tools</RootNamespace>
-    <AssemblyName>neuralia.Blockchains.Tools</AssemblyName>
+    <RootNamespace>Neuralia.Blockchains.Tools</RootNamespace>
+    <AssemblyName>Neuralia.Blockchains.Tools</AssemblyName>
     <TargetFrameworks>netstandard2.0;netcoreapp2.2</TargetFrameworks>
-    <PackageId>neuralia.Blockchains.Tools</PackageId>
+    <PackageId>Neuralia.Blockchains.Tools</PackageId>
     <VersionPrefix>1.0.0</VersionPrefix>
 <!--    <DefineConstants>DEBUG;DETECT_LEAKS;LOG_STACK</DefineConstants>-->
     

@@ -170,7 +170,6 @@ namespace Neuralia.Blockchains.Core.Network {
 			}
 
 			this.isServer = isServer;
-
 			this.EndPoint = remoteEndPoint;
 			this.RemoteEndPoint = remoteEndPoint.EndPoint;
 			this.IPMode = remoteEndPoint.IPMode;

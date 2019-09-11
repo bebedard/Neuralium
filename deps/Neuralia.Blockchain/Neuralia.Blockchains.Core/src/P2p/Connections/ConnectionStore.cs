@@ -312,7 +312,8 @@ namespace Neuralia.Blockchains.Core.P2p.Connections {
 		public virtual List<PeerConnection> CompleteConnectionsList => this.Connections.Values.Where(c => Enums.CompletePeerTypes.Contains(c.PeerType)).ToList();
 		public virtual Dictionary<Guid, PeerConnection> CompleteConnections => this.Connections.Where(c => Enums.CompletePeerTypes.Contains(c.Value.PeerType)).ToDictionary(c => c.Key, c => c.Value);
 
-		public IPAddress PublicIp { get; private set; }
+        public IPAddress PublicIp { get; private set; } 
+        ///public IPAddress PublicIp => IPAddress.Parse(GlobalSettings.ApplicationSettings.ip;
 
 		/// <summary>
 		///     a method others can use to further filter syncing nodes
@@ -321,6 +322,7 @@ namespace Neuralia.Blockchains.Core.P2p.Connections {
 
 		public int LocalPort => GlobalSettings.ApplicationSettings.port;
 
+        
 		public bool IsConnecting => this.ConnectingConnections.Any();
 
 		public ImmutableList<IPAddress> OurAddresses => this.ourAddresses.ToImmutableList();
@@ -1119,7 +1121,7 @@ namespace Neuralia.Blockchains.Core.P2p.Connections {
 		public void QueryLocalIPAddress() {
 			lock(this.locker) {
 				var ipList = new List<IPAddress>();
-				ipList.AddRange(new[] {IPAddress.Parse("0.0.0.0"), IPAddress.Parse("127.0.0.1"), IPAddress.Parse("::1")});
+				ipList.AddRange(new[] {IPAddress.Parse("0.0.0.0"), IPAddress.Parse("127.0.0.1"), IPAddress.Parse("::1"), IPAddress.Parse("::") });
 
 				if(!GlobalSettings.ApplicationSettings.UndocumentedDebugConfigurations.localhostOnly && NetworkInterface.GetIsNetworkAvailable()) {
 					if(GlobalSettings.ApplicationSettings.UseSTUNServer) {

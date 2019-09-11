@@ -23,6 +23,7 @@ cp Neuralia.Data.HashFunction.xxHash.1.0.0.nupkg ../../nuget-source/
 cp Neuralia.Data.HashFunction.xxHash.1.0.0.nupkg ../Neuralia.Blockchain/nuget-source/
 cp Neuralia.Data.HashFunction.xxHash.1.0.0.nupkg ../Neuralia.BouncyCastle/nuget-source/
 
+
 cd ../neuralia.blockchains.tools
 
 if test -f "neuralia.Blockchains.Tools.1.0.0.nupkg"; then
@@ -94,7 +95,7 @@ cp Neuralia.BouncyCastle.1.0.0.nupkg ../nuget-source/
 cd Neuralia.Blockchain
 
 if test -f "Neuralia.Blockchains.Common.1.0.0.nupkg" & test -f "Neuralia.Blockchains.Core.1.0.0.nupkg"; then
-echo "file exists."
+echo "files exists."
 else
 	dotnet restore
 	if dotnet build -c Release --no-incremental ; then

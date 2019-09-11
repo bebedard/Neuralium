@@ -110,6 +110,7 @@ namespace Neuralia.Blockchains.Core.Configuration {
 		public int acceptableTimeRange { get; set; } = 5; // in minutes
 
 		public int port { get; set; } = GlobalsService.DEFAULT_PORT;
+		public string ip { get; set; } = GlobalsService.DEFAULT_IP;
 		public int rpcPort { get; set; } = GlobalsService.DEFAULT_RPC_PORT;
 
 		public List<FullNode> Nodes { get; set; } = new List<FullNode>();

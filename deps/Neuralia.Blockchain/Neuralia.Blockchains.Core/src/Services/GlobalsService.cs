@@ -24,6 +24,8 @@ namespace Neuralia.Blockchains.Core.Services {
 		/// </summary>
 		public const int DEFAULT_PORT = 33888;
 
+        public const string DEFAULT_IP = "0.0.0.0";
+
 		/// <summary>
 		///     this is the default port our listener listens to
 		/// </summary>

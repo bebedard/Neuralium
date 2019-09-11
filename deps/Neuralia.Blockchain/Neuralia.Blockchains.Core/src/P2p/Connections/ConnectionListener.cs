@@ -37,9 +37,12 @@ namespace Neuralia.Blockchains.Core.P2p.Connections {
 
 			if(Socket.OSSupportsIPv6) {
 				this.StartServer(IPMode.IPv6);
+                Console.WriteLine("Started in ipv6 mode.");
 			} else {
 				this.StartServer(IPMode.IPv4);
-			}
+                Console.WriteLine("Started in ipv4 mode.");
+
+            }
 		}
 
 		private void StartServer(IPMode ipMode) {
@@ -48,6 +51,7 @@ namespace Neuralia.Blockchains.Core.P2p.Connections {
 
 					try {
 						this.tcpServer = this.CreateTcpServer(ipMode);
+                        Console.WriteLine("Server is in " + ipMode + " Mode");
 
 						this.tcpServer.NewConnection += (listener, connection, buffer) => {
 							Log.Verbose("New connection received");
