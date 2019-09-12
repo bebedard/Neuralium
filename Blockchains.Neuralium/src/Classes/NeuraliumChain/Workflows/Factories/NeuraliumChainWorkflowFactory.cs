@@ -34,8 +34,8 @@ namespace Blockchains.Neuralium.Classes.NeuraliumChain.Workflows.Factories {
 		public NeuraliumChainWorkflowFactory(INeuraliumCentralCoordinator centralCoordinator) : base(centralCoordinator) {
 		}
 
-		public override ICreatePresentationTransactionWorkflow<INeuraliumCentralCoordinator, INeuraliumChainComponentProvider> CreatePresentationTransactionChainWorkflow(CorrelationContext correlationContext) {
-			return new NeuraliumCreatePresentationTransactionWorkflow(this.centralCoordinator, correlationContext);
+		public override ICreatePresentationTransactionWorkflow<INeuraliumCentralCoordinator, INeuraliumChainComponentProvider> CreatePresentationTransactionChainWorkflow(CorrelationContext correlationContext, Guid? accountUuId) {
+			return new NeuraliumCreatePresentationTransactionWorkflow(this.centralCoordinator, correlationContext, accountUuId);
 		}
 
 		public override ICreateChangeKeyTransactionWorkflow<INeuraliumCentralCoordinator, INeuraliumChainComponentProvider> CreateChangeKeyTransactionWorkflow(byte changingKeyOrdinal, string note, CorrelationContext correlationContext) {

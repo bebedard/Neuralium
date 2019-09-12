@@ -683,8 +683,8 @@ namespace Neuralium.Shell.Classes.General {
 			}
 		}
 
-		public async Task<int> PublishAccount(ushort chainType, string accountUuId) {
-			return await this.CreateClientLongRunningEvent(async (correlationId, resetEvent) => await this.GetChainInterface(chainType).PresentAccountPublicly(correlationId).awaitableTask);
+		public async Task<int> PublishAccount(ushort chainType, Guid? accountUuId) {
+			return await this.CreateClientLongRunningEvent(async (correlationId, resetEvent) => await this.GetChainInterface(chainType).PresentAccountPublicly(correlationId,accountUuId).awaitableTask);
 		}
 
 		public Task StartMining(ushort chainType, string delegateAccountId) {

@@ -1,3 +1,4 @@
+using System;
 using Blockchains.Neuralium.Classes.NeuraliumChain.Providers;
 using Neuralia.Blockchains.Common.Classes.Blockchains.Common.Workflows.Creation.Transactions;
 using Neuralia.Blockchains.Core;
@@ -8,7 +9,7 @@ namespace Blockchains.Neuralium.Classes.NeuraliumChain.Workflows.Creation.Transa
 
 	public class NeuraliumCreatePresentationTransactionWorkflow : CreatePresentationTransactionWorkflow<INeuraliumCentralCoordinator, INeuraliumChainComponentProvider, INeuraliumAssemblyProvider>, INeuraliumCreatePresentationTransactionWorkflow {
 
-		public NeuraliumCreatePresentationTransactionWorkflow(INeuraliumCentralCoordinator centralCoordinator, CorrelationContext correlationContext) : base(centralCoordinator, correlationContext) {
+		public NeuraliumCreatePresentationTransactionWorkflow(INeuraliumCentralCoordinator centralCoordinator, CorrelationContext correlationContext, Guid? accountUuId) : base(centralCoordinator, correlationContext, accountUuId) {
 		}
 	}
 }

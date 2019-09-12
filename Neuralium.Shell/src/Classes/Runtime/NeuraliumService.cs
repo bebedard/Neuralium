@@ -189,7 +189,7 @@ namespace Neuralium.Shell.Classes.Runtime {
 			
 			//TimeSpan elapsed = DateTime.Now - ;
 
-			var limit = new DateTime(2019, 9, 13, 23, 0, 0).ToLocalTime();
+			var limit = new DateTime(2019, 9, 14, 23, 0, 0).ToLocalTime();
 			if(DateTime.Now > limit) {
 			
 				Console.BackgroundColor = ConsoleColor.Black;

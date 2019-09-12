@@ -221,7 +221,7 @@ namespace Neuralium.Shell.Controllers {
 			return this.rpcProvider.QueryWalletAccountPresentationTransactionId(chainType, accountUuid);
 		}
 
-		public Task<int> PublishAccount(ushort chainType, string accountUuId) {
+		public Task<int> PublishAccount(ushort chainType, Guid? accountUuId) {
 			return this.rpcProvider.PublishAccount(chainType, accountUuId);
 		}
 

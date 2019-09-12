@@ -175,7 +175,7 @@ namespace Neuralium.Shell.Classes.Runtime {
 			if(items[0] == "present") {
 				CorrelationContext cc = new CorrelationContext();
 				cc.InitializeNew();
-				this.neuraliumBlockChainInterface.PresentAccountPublicly(cc);
+				this.neuraliumBlockChainInterface.PresentAccountPublicly(cc, null);
 
 				return;
 			}

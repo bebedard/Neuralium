@@ -30,7 +30,7 @@ namespace Neuralium.Shell.Classes.Runtime {
 	public interface INeuraliumApp : ILoopThread, IAppRemote {
 	}
 
-	public class NeuraliumApp : NeuraliumAppConsole<AppSettings> {
+	public class NeuraliumApp : NeuraliumApp<AppSettings> {
 
 		public NeuraliumApp(IServiceProvider serviceProvider, IApplicationLifetime applicationLifetime, IRpcService rpcService, IOptions<AppSettings> appSettings, NeuraliumOptions options, IBlockchainTimeService timeService, IBlockchainNetworkingService networkingService, IGlobalsService globalService) : base(serviceProvider, applicationLifetime, rpcService, appSettings, options, timeService, networkingService, globalService) {
 		}
@@ -169,7 +169,7 @@ namespace Neuralium.Shell.Classes.Runtime {
 			// thats our current version. manually set for now.
 
 			//FileVersionInfo fileVersionInfo = FileVersionInfo.GetVersionInfo(Assembly.GetAssembly(typeof(NeuraliumApp)).Location);
-			parameters.softwareVersion = new SoftwareVersion(0, 0, 1, 1, "TESTNET trial run II", this.VersionValidationCallback);
+			parameters.softwareVersion = new SoftwareVersion(0, 0, 1, 2, "TESTNET trial run III", this.VersionValidationCallback);
 			parameters.appSettings = this.appSettings;
 			parameters.cmdOptions = this.CmdOptions;
 			parameters.peerType = Enums.PeerTypes.FullNode;
@@ -192,7 +192,7 @@ namespace Neuralium.Shell.Classes.Runtime {
 		/// <param name="other"></param>
 		/// <returns></returns>
 		private bool VersionValidationCallback(SoftwareVersion localVersion, SoftwareVersion other) {
-			SoftwareVersion minimumAcceptable = new SoftwareVersion(0, 0, 1, 1);
+			SoftwareVersion minimumAcceptable = new SoftwareVersion(0, 0, 1, 2);
 
 			return (other <= localVersion) && (other >= minimumAcceptable);
 		}

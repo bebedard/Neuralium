@@ -69,8 +69,7 @@ namespace Neuralium.Shell.Classes.Runtime {
 		}
 
 		protected virtual void ConfigureExtraServices(IServiceCollection services, IConfiguration configuration) {
-
-			//services.AddSingleton<INeuraliumApp, NeuraliumAppConsole>();
+			
 			services.AddSingleton<INeuraliumApp, NeuraliumApp>();
 		}
 
