@@ -19,7 +19,7 @@ The actual command line interface for the Server node.
 
 #### The first step is to ensure that the dependencies have been built and copied into the local-source folder.
 
-##### the source code to the below dependencies can be found here: [Neuralia Technologies source code]
+##### the source code to the below dependencies can be found here: [Neuralia Technologies source code](https://github.com/Neuralia) 
 
  - Neuralia.Blockchains.Tools
  - Neuralia.System.Data.HashFunction.xxHash
