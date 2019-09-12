@@ -180,21 +180,26 @@ namespace Neuralium.Shell.Classes.Runtime {
 
 		private readonly AutoResetEvent autoResetEvent = new AutoResetEvent(false);
 		protected virtual void CheckTestnetDelay() {
+			
+			//TODO: this needs review
 			//TimeSpan allowDelay = TimeSpan.FromDays(5);
-			TimeSpan allowDelay = new DateTime(2019, 9, 4, 23, 0, 0).ToLocalTime() - DateTime.Now;
+			//DateTime fileBuildTime = AssemblyUtils.GetBuildTimestamp(typeof(NeuraliumService));
+			
+			//TimeSpan allowDelay =  - fileBuildTime;
+			
+			//TimeSpan elapsed = DateTime.Now - ;
 
-			TimeSpan elapsed = DateTime.Now - AssemblyUtils.GetBuildTimestamp(typeof(NeuraliumService));
-
-			if(elapsed > allowDelay) {
-
+			var limit = new DateTime(2019, 9, 13, 23, 0, 0).ToLocalTime();
+			if(DateTime.Now > limit) {
+			
 				Console.BackgroundColor = ConsoleColor.Black;
 				Console.ForegroundColor = ConsoleColor.Red;
-				Log.Fatal("This TESTNET release has expired! if can not be used anymore. please download a newer version at: https://www.neuralium.com.");
-
+				Log.Fatal("This TESTNET release has expired! It can not be used anymore. Please download a more recent version from https://www.neuralium.com.");
+			
 				Environment.Exit(0);
 			} else {
-				TimeSpan remaining = allowDelay - elapsed;
-
+				TimeSpan remaining = limit - DateTime.Now;
+			
 				Log.Warning($"This TESTNET release is still valid for {remaining.Days} days and {remaining.Hours} hours.");
 			}
 		}

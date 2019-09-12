@@ -18,7 +18,7 @@ namespace Blockchains.Neuralium.Classes.NeuraliumChain.Events.Blocks.Serializati
 	public class NeuraliumBlockComponentsRehydrationFactory : BlockComponentsRehydrationFactory, INeuraliumBlockComponentsRehydrationFactory {
 		public override IElectionContext CreateElectionContext(IByteArray compressedContext) {
 
-			BrotliCompression compressor = new BrotliCompression();
+			GzipCompression compressor = new GzipCompression();
 
 			IByteArray decompressedContext = compressor.Decompress(compressedContext);
 

@@ -11,8 +11,9 @@ using Neuralia.Blockchains.Core.General.Types;
 namespace Blockchains.Neuralium.Classes.NeuraliumChain.Elections.BountyAllocators.V1 {
 	public class EqualSplitBountyAllocator : BountyAllocator {
 
-		public const decimal FULL_PEER_ALLOCATION = 1; // 100%
-		public const decimal WEAK_PEER_ALLOCATION = 0.33M; // 33%
+		public const decimal FULL_SHARE_PEER_ALLOCATION = 1; // 100%
+		public const decimal SIMPLE_SHARE_PEER_ALLOCATION = 0.66M; // 100%
+		public const decimal NO_SHARE_PEER_ALLOCATION = 0.33M; // 33%
 
 		public EqualSplitBountyAllocator(IBountyAllocationMethod BountyAllocationMethod) : base(BountyAllocationMethod) {
 		}
@@ -20,7 +21,7 @@ namespace Blockchains.Neuralium.Classes.NeuraliumChain.Elections.BountyAllocator
 		public EqualSplitBountyAllocator() {
 		}
 
-		public override void AllocateBounty(INeuraliumFinalElectionResults result, INeuraliumElectionContext electionContext, Dictionary<AccountId, (Enums.PeerTypes peerType, AccountId delegateAccountId)> electedPeers, Dictionary<AccountId, (decimal delegateBountyShare, decimal InfrastructureServiceFees)> delegateAllocations) {
+		public override void AllocateBounty(INeuraliumFinalElectionResults result, INeuraliumElectionContext electionContext, Dictionary<AccountId, (Enums.ElectedPeerShareTypes peerType, AccountId delegateAccountId)> electedPeers, Dictionary<AccountId, (decimal delegateBountyShare, decimal InfrastructureServiceFees)> delegateAllocations) {
 
 			int electedCount = result.ElectedCandidates.Count;
 
@@ -49,8 +50,9 @@ namespace Blockchains.Neuralium.Classes.NeuraliumChain.Elections.BountyAllocator
 
 			decimal reallocatePool = 0;
 
-			var weakerPeers = result.ElectedCandidates.Where(e => !Enums.CompletePeerTypes.Contains(e.Value.PeerType)).ToList();
-			var strongerPeers = result.ElectedCandidates.Where(e => Enums.CompletePeerTypes.Contains(e.Value.PeerType)).ToList();
+			var noSharePeers = result.ElectedCandidates.Where(e => e.Value.PeerShareType == Enums.ElectedPeerShareTypes.None).ToList();
+			var simpleSharePeers = result.ElectedCandidates.Where(e => e.Value.PeerShareType == Enums.ElectedPeerShareTypes.DigestThenBlocks).ToList();
+			var fullSharePeers = result.ElectedCandidates.Where(e => e.Value.PeerShareType == Enums.ElectedPeerShareTypes.DigestAndBlocks).ToList();
 
 			// now allocate weaker peers with their lesser part of the bounty
 
@@ -81,25 +83,36 @@ namespace Blockchains.Neuralium.Classes.NeuraliumChain.Elections.BountyAllocator
 				}
 			}
 
-			foreach(var elected in weakerPeers) {
-				decimal adjustedBounty = individualBounty * WEAK_PEER_ALLOCATION;
+			foreach(var elected in noSharePeers) {
+				decimal adjustedBounty = individualBounty * NO_SHARE_PEER_ALLOCATION;
 				reallocatePool += individualBounty - adjustedBounty;
 
 				AllocateBounty(elected, adjustedBounty);
 			}
 
-			decimal strongerBounty = 0;
-			int strongPeerCount = strongerPeers.Count();
+			decimal simpleShareBounty = 0;
+			int simpleShareCount = simpleSharePeers.Count();
 
-			if(strongPeerCount > 0) {
-				strongerBounty = individualBounty + (reallocatePool / strongPeerCount);
+			if(simpleShareBounty > 0) {
+				simpleShareBounty = individualBounty + (reallocatePool / simpleShareCount);
 			}
 
-			foreach(var elected in strongerPeers) {
+			foreach(var elected in simpleSharePeers) {
 
-				AllocateBounty(elected, strongerBounty);
+				AllocateBounty(elected, simpleShareBounty);
+			}
+			
+			decimal fullShareBounty = 0;
+			int fullSharePeerCount = fullSharePeers.Count();
+
+			if(fullSharePeerCount > 0) {
+				fullShareBounty = individualBounty + (reallocatePool / fullSharePeerCount);
 			}
 
+			foreach(var elected in fullSharePeers) {
+
+				AllocateBounty(elected, fullShareBounty);
+			}
 		}
 	}
 }

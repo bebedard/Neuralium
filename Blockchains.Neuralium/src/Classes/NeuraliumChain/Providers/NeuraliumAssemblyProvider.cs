@@ -26,7 +26,7 @@ namespace Blockchains.Neuralium.Classes.NeuraliumChain.Providers {
 		ITransactionEnvelope GenerateRefillNeuraliumsTransaction(Guid accountUuid, CorrelationContext correlationContext);
 	}
 
-	public class NeuraliumAssemblyProvider : AssemblyManager<INeuraliumCentralCoordinator, INeuraliumChainComponentProvider>, INeuraliumAssemblyProvider {
+	public class NeuraliumAssemblyProvider : AssemblyProvider<INeuraliumCentralCoordinator, INeuraliumChainComponentProvider>, INeuraliumAssemblyProvider {
 		public NeuraliumAssemblyProvider(INeuraliumCentralCoordinator centralCoordinator) : base(centralCoordinator) {
 		}
 

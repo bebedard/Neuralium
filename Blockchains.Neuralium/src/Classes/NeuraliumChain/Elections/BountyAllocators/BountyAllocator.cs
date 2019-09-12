@@ -18,6 +18,6 @@ namespace Blockchains.Neuralium.Classes.NeuraliumChain.Elections.BountyAllocator
 
 		}
 
-		public abstract void AllocateBounty(INeuraliumFinalElectionResults result, INeuraliumElectionContext electionContext, Dictionary<AccountId, (Enums.PeerTypes peerType, AccountId delegateAccountId)> electedPeers, Dictionary<AccountId, (decimal delegateBountyShare, decimal InfrastructureServiceFees)> delegateAllocations);
+		public abstract void AllocateBounty(INeuraliumFinalElectionResults result, INeuraliumElectionContext electionContext, Dictionary<AccountId, (Enums.ElectedPeerShareTypes peerType, AccountId delegateAccountId)> electedPeers, Dictionary<AccountId, (decimal delegateBountyShare, decimal InfrastructureServiceFees)> delegateAllocations);
 	}
 }

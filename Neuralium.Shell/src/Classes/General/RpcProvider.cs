@@ -99,6 +99,8 @@ namespace Neuralium.Shell.Classes.General {
 		Task Error(int correlationId, string error);
 
 		Task Alert(int messageCode);
+		
+		Task ConnectableStatusChanged(bool connectable);
 
 		Task ShutdownCompleted();
 		Task ShutdownStarted();
@@ -354,7 +356,15 @@ namespace Neuralium.Shell.Classes.General {
 						// alert the client of the event
 						return this.HubContext?.Clients?.All?.Alert((int) extraParameters[0]);
 					};
-				} else {
+				} 
+				else if(eventType == BlockchainSystemEventTypes.Instance.ConnectableStatusChanged) {
+					action = async (sessionCorrelationId, resetEvent) => {
+
+						// alert the client of the event
+						return this.HubContext?.Clients?.All?.ConnectableStatusChanged((bool) extraParameters[0]);
+					};
+				}
+				else {
 
 					action = async (sessionCorrelationId, resetEvent) => {
 
