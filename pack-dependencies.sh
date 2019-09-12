@@ -1,6 +1,7 @@
 #!/bin/bash
 
 mkdir deps
+mkdir local-source
 cd deps
 git clone https://github.com/Neuralia/Neuralia.Blockchains.Tools
 git clone https://github.com/Neuralia/Neuralia.Data.HashFunction.xxHash
