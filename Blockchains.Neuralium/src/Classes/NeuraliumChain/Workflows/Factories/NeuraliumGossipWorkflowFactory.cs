@@ -23,17 +23,10 @@ namespace Blockchains.Neuralium.Classes.NeuraliumChain.Workflows.Factories {
 		public override INetworkingWorkflow<IBlockchainEventsRehydrationFactory> CreateGossipResponseWorkflow(IBlockchainGossipMessageSet messageSet, PeerConnection peerConnectionn) {
 			this.ValidateTrigger(messageSet);
 
-			if((messageSet.BaseMessage.WorkflowType == GossipWorkflowIDs.TRANSACTION_RECEIVED) && (messageSet.BaseMessage != null) && messageSet.BaseMessage is INeuraliumGossipWorkflowTriggerMessage) {
-				return new NeuraliumNewTransactionReceivedGossipWorkflow(this.centralCoordinator, (INeuraliumGossipMessageSet<INeuraliumGossipWorkflowTriggerMessage<INeuraliumTransactionEnvelope>, INeuraliumTransactionEnvelope>) messageSet, peerConnectionn);
-			}
-
-			if((messageSet.BaseMessage.WorkflowType == GossipWorkflowIDs.BLOCK_RECEIVED) && (messageSet.BaseMessage != null) && messageSet.BaseMessage is INeuraliumGossipWorkflowTriggerMessage) {
-				return new NeuraliumNewBlockReceivedGossipWorkflow(this.centralCoordinator, (INeuraliumGossipMessageSet<INeuraliumGossipWorkflowTriggerMessage<INeuraliumBlockEnvelope>, INeuraliumBlockEnvelope>) messageSet, peerConnectionn);
-			}
-
-			if((messageSet.BaseMessage.WorkflowType == GossipWorkflowIDs.MESSAGE_RECEIVED) && (messageSet.BaseMessage != null) && messageSet.BaseMessage is INeuraliumGossipWorkflowTriggerMessage) {
-				return new NeuraliumNewBlockchainMessageReceivedGossipWorkflow(this.centralCoordinator, (INeuraliumGossipMessageSet<INeuraliumGossipWorkflowTriggerMessage<INeuraliumMessageEnvelope>, INeuraliumMessageEnvelope>) messageSet, peerConnectionn);
-			}
+			// template:
+			// if((messageSet.BaseMessage.WorkflowType == GossipWorkflowIDs.TRANSACTION_RECEIVED) && (messageSet.BaseMessage != null) && messageSet.BaseMessage is INeuraliumGossipWorkflowTriggerMessage) {
+			// 	return new NeuraliumNewTransactionReceivedGossipWorkflow(this.centralCoordinator, (INeuraliumGossipMessageSet<INeuraliumGossipWorkflowTriggerMessage<INeuraliumTransactionEnvelope>, INeuraliumTransactionEnvelope>) messageSet, peerConnectionn);
+			// }
 
 			return null;
 		}

@@ -242,13 +242,13 @@ namespace Blockchains.Neuralium.Classes.NeuraliumChain.Events.Serialization {
 
 			} else if(version.Type == BlockchainMessageTypes.Instance.ACTIVE_ELECTION_CANDIDACY) {
 				if(version == (1, 0)) {
-					// a very rare case where it is not scoped for the chain
+					// a very rare case where it is not scopped for the chain
 					return new ActiveElectionCandidacyMessage();
 				}
 
 			} else if(version.Type == BlockchainMessageTypes.Instance.PASSIVE_ELECTION_CANDIDACY) {
 				if(version == (1, 0)) {
-					// a very rare case where it is not scoped for the chain
+					// a very rare case where it is not scopped for the chain
 					return new PassiveElectionCandidacyMessage();
 				}
 

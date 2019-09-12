@@ -4,6 +4,10 @@ namespace Blockchains.Neuralium.Classes.NeuraliumChain.DataStructures {
 
 	public class NeuraliumBlockElectionDistillate : BlockElectionDistillate {
 
+		public override IntermediaryElectionContextDistillate CreateIntermediateElectionContext() {
+			return new NeuraliumIntermediaryElectionContextDistillate();
+		}
+		
 		public override PassiveElectionContextDistillate CreatePassiveElectionContext() {
 			return new NeuraliumPassiveElectionContextDistillate();
 		}
@@ -22,5 +26,9 @@ namespace Blockchains.Neuralium.Classes.NeuraliumChain.DataStructures {
 	}
 
 	public class NeuraliumElectedCandidateResultDistillate : ElectedCandidateResultDistillate {
+	}
+
+	public class NeuraliumIntermediaryElectionContextDistillate : IntermediaryElectionContextDistillate {
+		
 	}
 }

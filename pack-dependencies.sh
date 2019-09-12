@@ -26,15 +26,15 @@ else
 	fi
 fi
 
-cp Neuralia.Data.HashFunction.xxHash.1.0.0.nupkg ../neuralia.blockchains.tools/nuget-source/
-cp Neuralia.Data.HashFunction.xxHash.1.0.0.nupkg ../../nuget-source/
-cp Neuralia.Data.HashFunction.xxHash.1.0.0.nupkg ../Neuralia.Blockchain/nuget-source/
-cp Neuralia.Data.HashFunction.xxHash.1.0.0.nupkg ../Neuralia.BouncyCastle/nuget-source/
+cp Neuralia.Data.HashFunction.xxHash.1.0.0.nupkg ../Neuralia.Blockchains.Tools/local-source/
+cp Neuralia.Data.HashFunction.xxHash.1.0.0.nupkg ../../local-source/
+cp Neuralia.Data.HashFunction.xxHash.1.0.0.nupkg ../Neuralia.Blockchain/local-source/
+cp Neuralia.Data.HashFunction.xxHash.1.0.0.nupkg ../Neuralia.BouncyCastle/local-source/
 
 
-cd ../neuralia.blockchains.tools
+cd ../Neuralia.Blockchains.Tools
 
-if test -f "neuralia.Blockchains.Tools.1.0.0.nupkg"; then
+if test -f "Neuralia.Blockchains.Tools.1.0.0.nupkg"; then
 echo "file exists."
 else
 	dotnet restore
@@ -50,9 +50,9 @@ else
 	fi
 fi
 
-cp Neuralia.Blockchains.Tools.1.0.0.nupkg ../Neuralia.Blockchain/nuget-source/
-cp Neuralia.Blockchains.Tools.1.0.0.nupkg ../Neuralia.BouncyCastle/nuget-source/
-cp Neuralia.Blockchains.Tools.1.0.0.nupkg ../../nuget-source/
+cp Neuralia.Blockchains.Tools.1.0.0.nupkg ../Neuralia.Blockchain/local-source/
+cp Neuralia.Blockchains.Tools.1.0.0.nupkg ../Neuralia.BouncyCastle/local-source/
+cp Neuralia.Blockchains.Tools.1.0.0.nupkg ../../local-source/
 
 cd ../Neuralia.STUN
 
@@ -73,8 +73,8 @@ else
 fi
 
 
-cp Neuralia.STUN.1.0.0.nupkg ../Neuralia.Blockchain/nuget-source/
-cp Neuralia.STUN.1.0.0.nupkg ../../nuget-source/
+cp Neuralia.STUN.1.0.0.nupkg ../Neuralia.Blockchain/local-source/
+cp Neuralia.STUN.1.0.0.nupkg ../../local-source/
 
 
 cd ../
@@ -97,8 +97,8 @@ cd Neuralia.BouncyCastle
 fi
 
 cd ../
-cp Neuralia.BouncyCastle.1.0.0.nupkg Neuralia.Blockchain/nuget-source/
-cp Neuralia.BouncyCastle.1.0.0.nupkg ../nuget-source/
+cp Neuralia.BouncyCastle.1.0.0.nupkg Neuralia.Blockchain/local-source/
+cp Neuralia.BouncyCastle.1.0.0.nupkg ../local-source/
 
 cd Neuralia.Blockchain
 
@@ -118,5 +118,5 @@ else
 	fi
 fi
 
-cp Neuralia.Blockchains.Common.1.0.0.nupkg ../../nuget-source/
-cp Neuralia.Blockchains.Core.1.0.0.nupkg ../../nuget-source/
+cp Neuralia.Blockchains.Common.1.0.0.nupkg ../../local-source/
+cp Neuralia.Blockchains.Core.1.0.0.nupkg ../../local-source/

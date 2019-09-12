@@ -1,12 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
+using System.Linq;
+using System.Net.WebSockets;
 using System.Threading;
 using Blockchains.Neuralium.Classes.NeuraliumChain.DataStructures;
 using Blockchains.Neuralium.Classes.NeuraliumChain.DataStructures.Timeline;
 using Blockchains.Neuralium.Classes.NeuraliumChain.Events.Blocks.Specialization.Elections.Results.V1;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using Microsoft.IO;
 using Neuralia.Blockchains.Common.Classes.Blockchains.Common.DataStructures.ExternalAPI;
 using Neuralia.Blockchains.Common.Classes.Blockchains.Common.DataStructures.ExternalAPI.Wallet;
 using Neuralia.Blockchains.Common.Classes.Blockchains.Common.Events.Blocks;
@@ -18,11 +22,13 @@ using Neuralia.Blockchains.Common.Classes.Blockchains.Common.Wallet.Keys;
 using Neuralia.Blockchains.Common.Classes.Services;
 using Neuralia.Blockchains.Common.Classes.Tools;
 using Neuralia.Blockchains.Core;
+using Neuralia.Blockchains.Core.Compression;
 using Neuralia.Blockchains.Core.General;
 using Neuralia.Blockchains.Core.General.Types;
 using Neuralia.Blockchains.Core.P2p.Connections;
 using Neuralia.Blockchains.Core.Services;
 using Neuralia.Blockchains.Tools.Data;
+using Neuralia.Blockchains.Tools.Data.Allocation;
 using Neuralia.Blockchains.Tools.Serialization;
 using Neuralium.Shell.Classes.Configuration;
 using Neuralium.Shell.Classes.Services;
@@ -80,7 +86,7 @@ namespace Neuralium.Shell.Classes.Runtime {
 				}
 			}
 		}
-
+		
 		//DEBUG
 		protected virtual async void ProcessKey(string[] items) {
 
@@ -190,12 +196,24 @@ namespace Neuralium.Shell.Classes.Runtime {
 				if(items.Length == 2) {
 					para = long.Parse(items[1]);
 				}
+				//this.neuraliumBlockChainInterface.Test("");
+				string txt = File.ReadAllText("/home/jdb/Genesis.txt");
+				
+				var gg = JsonConvert.DeserializeObject<NeuraliumSynthesizedBlockApi>(txt);
 
-				var result3 = await this.neuraliumBlockChainInterface.QueryBlockBinaryTransactions(para).awaitableTask;
 
-				foreach(var trx in result3) {
-					Console.WriteLine($"{trx.Key}--\"{((ByteArray) trx.Value).ToBase64()}\"");
-				}
+				//var ff = this.test(gg.ConfirmedGeneralTransactions.Values.ToList()[5]);
+				// GzipCompression compressor = new GzipCompression();
+				//
+				// 	IByteArray bytes = compressor.Decompress((ByteArray) );
+				// 	
+				// this.neuraliumBlockChainInterface.SyncBlockchainExternal(txt);
+				//
+				// var result3 = await this.neuraliumBlockChainInterface.QueryBlockBinaryTransactions(para).awaitableTask;
+				//
+				// foreach(var trx in result3) {
+				// 	Console.WriteLine($"{trx.Key}--\"{((ByteArray) trx.Value).ToBase64()}\"");
+				// }
 
 				Log.Information("test results: ");
 			}
@@ -359,7 +377,7 @@ namespace Neuralium.Shell.Classes.Runtime {
 				Console.WriteLine("Connected to peers:");
 
 				foreach(PeerConnection node in this.networkingService.ConnectionStore.AllConnectionsList) {
-					Console.WriteLine($"Peer: {node.ScopedAdjustedIp}:{node.NodeAddressInfoInfo.RealPort}");
+					Console.WriteLine($"Peer: {node.ScoppedAdjustedIp}:{node.NodeAddressInfoInfo.RealPort}");
 				}
 
 				Console.WriteLine("=====================================================");

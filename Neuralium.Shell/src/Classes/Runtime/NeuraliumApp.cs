@@ -1,4 +1,6 @@
 using System;
+using System.IO;
+using System.IO.Abstractions;
 using System.Net.Sockets;
 using Blockchains.Neuralium.Classes;
 using Blockchains.Neuralium.Classes.NeuraliumChain;
@@ -11,10 +13,13 @@ using Neuralia.Blockchains.Common.Classes.Blockchains.Common.Events.Transactions
 using Neuralia.Blockchains.Common.Classes.Services;
 using Neuralia.Blockchains.Core;
 using Neuralia.Blockchains.Core.Configuration;
+using Neuralia.Blockchains.Core.Extensions;
 using Neuralia.Blockchains.Core.General.Versions;
 using Neuralia.Blockchains.Core.Network.Exceptions;
 using Neuralia.Blockchains.Core.Services;
 using Neuralia.Blockchains.Core.Tools;
+using Neuralia.Blockchains.Tools.Data;
+using Neuralia.Blockchains.Tools.Serialization;
 using Neuralia.Blockchains.Tools.Threading;
 using Neuralium.Shell.Classes.Configuration;
 using Neuralium.Shell.Classes.Services;
@@ -164,7 +169,7 @@ namespace Neuralium.Shell.Classes.Runtime {
 			// thats our current version. manually set for now.
 
 			//FileVersionInfo fileVersionInfo = FileVersionInfo.GetVersionInfo(Assembly.GetAssembly(typeof(NeuraliumApp)).Location);
-			parameters.softwareVersion = new SoftwareVersion(0, 0, 1, 0, "TESTNET trial run I", this.VersionValidationCallback);
+			parameters.softwareVersion = new SoftwareVersion(0, 0, 1, 1, "TESTNET trial run II", this.VersionValidationCallback);
 			parameters.appSettings = this.appSettings;
 			parameters.cmdOptions = this.CmdOptions;
 			parameters.peerType = Enums.PeerTypes.FullNode;
@@ -187,7 +192,7 @@ namespace Neuralium.Shell.Classes.Runtime {
 		/// <param name="other"></param>
 		/// <returns></returns>
 		private bool VersionValidationCallback(SoftwareVersion localVersion, SoftwareVersion other) {
-			SoftwareVersion minimumAcceptable = new SoftwareVersion(0, 0, 1, 0);
+			SoftwareVersion minimumAcceptable = new SoftwareVersion(0, 0, 1, 1);
 
 			return (other <= localVersion) && (other >= minimumAcceptable);
 		}
@@ -207,6 +212,11 @@ namespace Neuralium.Shell.Classes.Runtime {
 					}
 				}
 
+#if TESTNET
+				this.DeleteObsoleteWallets();
+				
+#endif
+				
 				this.InitRpc();
 
 				if(this.appSettings.P2pEnabled) {
@@ -242,6 +252,77 @@ namespace Neuralium.Shell.Classes.Runtime {
 			}
 		}
 
+#if TESTNET	
+		protected virtual void DeleteObsoleteWallets() {
+			
+			
+			string testnetFlagFilePath = Path.Combine(GlobalsService.GetGeneralSystemFilesDirectoryPath(), ".testnet-wallet-version-flag");
+
+			bool deleteObsoleteFolder = false;
+			try {
+				if(File.Exists(testnetFlagFilePath)) {
+					IByteArray data = (ByteArray)File.ReadAllBytes(testnetFlagFilePath);
+
+					var rehydrator = DataSerializationFactory.CreateRehydrator(data);
+					
+					SoftwareVersion version = new SoftwareVersion();
+					version.Rehydrate(rehydrator);
+
+					data.Return();
+					
+					if(version < GlobalSettings.SoftwareVersion) {
+						deleteObsoleteFolder = true;
+					}
+				} else {
+					deleteObsoleteFolder = true;
+				}
+			} catch {
+			}
+
+			if(deleteObsoleteFolder) {
+				
+				try {
+					string neuraliumfolder = Path.Combine(GlobalsService.GetGeneralSystemFilesDirectoryPath(), GlobalsService.TOKEN_CHAIN_NAME);
+					string neuraliumfolderOld = Path.Combine(GlobalsService.GetGeneralSystemFilesDirectoryPath(), "neuraliums");
+					
+					if(Directory.Exists(neuraliumfolder)) {
+						
+						Log.Warning("You have a wallet from an older TESTNET version. we are deleting it for you.");
+						
+						Directory.Delete(neuraliumfolder, true);
+					}
+					if(Directory.Exists(neuraliumfolderOld)) {
+						
+						Log.Warning("You have a wallet from an older TESTNET version. we are deleting it for you.");
+						
+						Directory.Delete(neuraliumfolderOld, true);
+					}
+
+					if(File.Exists(testnetFlagFilePath)) {
+						File.Delete(testnetFlagFilePath);
+					}
+				} catch {
+							
+				}
+			}
+
+			try {
+				if(!File.Exists(testnetFlagFilePath)) {
+					var dehydrator = DataSerializationFactory.CreateDehydrator();
+					GlobalSettings.SoftwareVersion.Dehydrate(dehydrator);
+
+					var resultBytes = dehydrator.ToArray();
+
+					FileExtensions.EnsureDirectoryStructure(GlobalsService.GetGeneralSystemFilesDirectoryPath(), new FileSystem());
+
+					FileExtensions.WriteAllBytes(testnetFlagFilePath, resultBytes, new FileSystem());
+					resultBytes.Return();
+				}
+			}catch {
+							
+			}
+		}
+#endif
 		/// <summary>
 		///     these items will be called only when the set of dependent components will be initialized
 		/// </summary>

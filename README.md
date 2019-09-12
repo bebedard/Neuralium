@@ -1,5 +1,7 @@
 # Neuralium
 
+##### Version:  Trial run III
+
 The Neuralium crypto token console server node
 
 ### Blockchains.Neuralium
@@ -14,16 +16,19 @@ The actual command line interface for the Server node.
 ## Build Instructions
 
 ##### First, ensure dotnet core 2.2 SDK is installed
-Run the following bash script in the base directory
->./pack-dependencies.sh
+
+#### The first step is to ensure that the dependencies have been built and copied into the local-source folder.
+
+##### the source code to the below dependencies can be found here: [Neuralia Technologies source code](https://github.com/Neuralia) 
+
+ - Neuralia.Blockchains.Tools
+ - Neuralia.System.Data.HashFunction.xxHash
+ - Neuralia.STUN
+ - Neuralia.BouncyCastle
+ - Neuralia.Blockchains.Core
+ - Neuralia.Blockchains.Common
 
 Then, simply invoke the right build file for your needs
-
 >cd targets
 > ./linux.sh
-
-or if you want to build for arm
-
->./arm.sh
-
 this will produce the executable in the folder /build

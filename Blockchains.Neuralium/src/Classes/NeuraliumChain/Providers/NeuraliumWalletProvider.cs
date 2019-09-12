@@ -490,7 +490,7 @@ namespace Blockchains.Neuralium.Classes.NeuraliumChain.Providers {
 						delegateAccountId = new AccountId(electionResult.DelegateAccountId);
 					}
 
-					neuraliumSynthesizedElectionResult.ElectedAccounts.Add(accountId, (accountId, delegateAccountId, (Enums.PeerTypes) electionResult.PeerType, electionResult.SelectedTransactions));
+					neuraliumSynthesizedElectionResult.ElectedAccounts.Add(accountId, (accountId, delegateAccountId, (Enums.ElectedPeerShareTypes) electionResult.PeerType, electionResult.SelectedTransactions));
 					neuraliumSynthesizedElectionResult.BlockId = synthesizedBlockApi.BlockId - electionResult.Offset;
 					neuraliumSynthesizedElectionResult.ElectedGains.Add(accountId, (electionResult.BountyShare, electionResult.Tips));
 

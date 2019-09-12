@@ -1,18 +1,17 @@
 using System;
 using Blockchains.Neuralium.Classes.NeuraliumChain.Providers;
-using Blockchains.Neuralium.Classes.NeuraliumChain.Workflows.Chain.HandleReceivedGossipMessage;
 using Blockchains.Neuralium.Classes.NeuraliumChain.Workflows.Creation.Messages.Elections;
 using Blockchains.Neuralium.Classes.NeuraliumChain.Workflows.Creation.Transactions;
 using Blockchains.Neuralium.Classes.NeuraliumChain.Workflows.debugging;
 using Neuralia.Blockchains.Common.Classes.Blockchains.Common.Events.Transactions.Identifiers;
 using Neuralia.Blockchains.Common.Classes.Blockchains.Common.Models;
 using Neuralia.Blockchains.Common.Classes.Blockchains.Common.Workflows.Chain;
-using Neuralia.Blockchains.Common.Classes.Blockchains.Common.Workflows.Chain.HandleReceivedGossipMessage;
 using Neuralia.Blockchains.Common.Classes.Blockchains.Common.Workflows.Creation.Messages.Elections;
 using Neuralia.Blockchains.Common.Classes.Blockchains.Common.Workflows.Creation.Transactions;
 using Neuralia.Blockchains.Common.Classes.Blockchains.Common.Workflows.Factories;
 using Neuralia.Blockchains.Common.Classes.Blockchains.Common.Workflows.Messages;
 using Neuralia.Blockchains.Core;
+using Neuralia.Blockchains.Core.Configuration;
 using Neuralia.Blockchains.Core.General.Types;
 using Neuralia.Blockchains.Core.General.Types.Specialized;
 using Neuralia.Blockchains.Core.P2p.Connections;
@@ -55,12 +54,8 @@ namespace Blockchains.Neuralium.Classes.NeuraliumChain.Workflows.Factories {
 			return new InsertDebugMessageWorkflow(this.centralCoordinator);
 		}
 
-		public override IReceiveGossipMessageWorkflow<INeuraliumCentralCoordinator, INeuraliumChainComponentProvider> CreateReceiveGossipMessageWorkflow(IBlockchainGossipMessageSet gossipMessageSet, PeerConnection connection) {
-			return new NeuraliumHandleReceivedGossipMessageWorkflow(this.centralCoordinator, gossipMessageSet, connection);
-		}
-
-		public override ISendElectionsRegistrationMessageWorkflow<INeuraliumCentralCoordinator, INeuraliumChainComponentProvider> CreateSendElectionsCandidateRegistrationMessageWorkflow(AccountId candidateAccountId, ElectionsCandidateRegistrationInfo electionsCandidateRegistrationInfo, CorrelationContext correlationContext) {
-			return new NeuraliumSendElectionsRegistrationMessageWorkflow(candidateAccountId, electionsCandidateRegistrationInfo, this.centralCoordinator, correlationContext);
+		public override ISendElectionsRegistrationMessageWorkflow<INeuraliumCentralCoordinator, INeuraliumChainComponentProvider> CreateSendElectionsCandidateRegistrationMessageWorkflow(AccountId candidateAccountId, ElectionsCandidateRegistrationInfo electionsCandidateRegistrationInfo, ChainConfigurations.RegistrationMethods registrationMethod, CorrelationContext correlationContext) {
+			return new NeuraliumSendElectionsRegistrationMessageWorkflow(candidateAccountId, electionsCandidateRegistrationInfo, registrationMethod, this.centralCoordinator, correlationContext);
 		}
 
 		public override ILoadWalletWorkflow<INeuraliumCentralCoordinator, INeuraliumChainComponentProvider> CreateLoadWalletWorkflow() {
@@ -72,9 +67,5 @@ namespace Blockchains.Neuralium.Classes.NeuraliumChain.Workflows.Factories {
 			return new CreateNeuraliumRefillTransactionWorkflow(accountUuid, null, this.centralCoordinator, correlationContext);
 		}
 #endif
-
-		public virtual INeuraliumReceiveGossipMessageWorkflow CreateNeuraliumReceiveGossipMessageWorkflow(IBlockchainGossipMessageSet gossipMessageSet, PeerConnection connection) {
-			return (INeuraliumReceiveGossipMessageWorkflow) this.CreateReceiveGossipMessageWorkflow(gossipMessageSet, connection);
-		}
 	}
 }

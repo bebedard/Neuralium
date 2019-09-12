@@ -89,10 +89,12 @@ namespace Blockchains.Neuralium.Classes.NeuraliumChain.Factories {
 			NeuraliumBlockchainManager transactionBlockchainManager = new NeuraliumBlockchainManager(centralCoordinator);
 			NeuraliumSerializationManager serializationManager = new NeuraliumSerializationManager(centralCoordinator);
 			NeuraliumValidationManager validationManager = new NeuraliumValidationManager(centralCoordinator);
+			NeuraliumGossipManager gossipManager = new NeuraliumGossipManager(centralCoordinator);
 
 			componentsInjector.blockchainManager = transactionBlockchainManager;
 			componentsInjector.serializationManager = serializationManager;
 			componentsInjector.validationManager = validationManager;
+			componentsInjector.gossipManager = gossipManager;
 
 			componentsInjector.chainInterface = chainInterface;
 
