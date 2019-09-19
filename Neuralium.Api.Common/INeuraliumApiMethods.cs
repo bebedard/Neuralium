@@ -50,7 +50,7 @@ namespace Neuralium.Api.Common {
 		Task<object> QueryWalletAccountDetails(ushort chainType, Guid accountUuid);
 		Task<string> QueryWalletAccountPresentationTransactionId(ushort chainType, Guid accountUuid);
 
-		Task<int> PublishAccount(ushort chainType, string accountUuId);
+		Task<int> PublishAccount(ushort chainType, Guid? accountUuId);
 		Task StartMining(ushort chainType, string delegateAccountId);
 		Task StopMining(ushort chainType);
 		Task<bool> IsMiningEnabled(ushort chainType);

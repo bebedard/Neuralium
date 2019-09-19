@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Blockchains.Neuralium.Classes.NeuraliumChain.Dal;
 using Blockchains.Neuralium.Classes.NeuraliumChain.Dal.Wallet;
@@ -144,7 +145,7 @@ namespace Blockchains.Neuralium.Classes.NeuraliumChain.Providers {
 				var version = new ComponentVersion<TransactionType>(t.Version);
 
 				return new NeuraliumWalletTransactionHistoryHeaderAPI {
-					TransactionId = t.TransactionId, Sender = transactionId.Account.ToString(), Timestamp = t.Timestamp, Status = t.Status,
+					TransactionId = t.TransactionId, Sender = transactionId.Account.ToString(), Timestamp = t.Timestamp.ToString(), Status = t.Status,
 					Version = new {transactionType = version.Type.Value, major = version.Major.Value, minor = version.Minor.Value}, Recipient = t.Recipient, Local = t.Local, Amount = t.Amount,
 					Tip = t.Tip, Note = t.Note
 				};
@@ -170,7 +171,7 @@ namespace Blockchains.Neuralium.Classes.NeuraliumChain.Providers {
 				var version = new ComponentVersion<TransactionType>(t.Version);
 
 				return new NeuraliumWalletTransactionHistoryDetailsAPI {
-					TransactionId = t.TransactionId, Sender = new TransactionId(t.TransactionId).Account.ToString(), Timestamp = t.Timestamp, Status = t.Status,
+					TransactionId = t.TransactionId, Sender = new TransactionId(t.TransactionId).Account.ToString(), Timestamp = t.Timestamp.ToString(), Status = t.Status,
 					Version = new {transactionType = version.Type.Value, major = version.Major.Value, minor = version.Minor.Value}, Recipient = t.Recipient, Contents = t.Contents, Local = t.Local,
 					Amount = t.Amount, Tip = t.Tip, Note = t.Note
 				};
@@ -236,6 +237,13 @@ namespace Blockchains.Neuralium.Classes.NeuraliumChain.Providers {
 			this.centralCoordinator.PostSystemEvent(NeuraliumSystemEventGenerator.NeuraliumAccountTotalUpdated(targetAccountId.SequenceId, targetAccountId.AccountType, total));
 		}
 
+		public override void RemoveLocalTransactionCacheEntry(TransactionId transactionId) {
+			base.RemoveLocalTransactionCacheEntry(transactionId);
+			
+			TotalAPI total = this.GetAccountBalance(transactionId.Account, true);
+			this.centralCoordinator.PostSystemEvent(NeuraliumSystemEventGenerator.NeuraliumAccountTotalUpdated(transactionId.Account.SequenceId, transactionId.Account.AccountType, total));
+		}
+		
 		private void InsertNeuraliumTransactionTimelineEntry(ITransaction transaction, AccountId targetAccountId, INeuraliumWalletTransactionHistory neuraliumWalletTransactionHistory) {
 			if((neuraliumWalletTransactionHistory.Amount == 0) && (neuraliumWalletTransactionHistory.Tip == 0)) {
 				// this transaction is most probably not a token influencing transaction. let's ignore 0 values
@@ -429,7 +437,7 @@ namespace Blockchains.Neuralium.Classes.NeuraliumChain.Providers {
 			//TODO: merge correctly with base version of this method
 			if(this.WalletFileInfo.Accounts[accountUuid] is INeuraliumAccountFileInfo neuraliumAccountFileInfo) {
 
-				timelineHeader.FirstDay = neuraliumAccountFileInfo.WalletTimelineFileInfo.GetFirstDay();
+				timelineHeader.FirstDay = neuraliumAccountFileInfo.WalletTimelineFileInfo.GetFirstDay().ToUniversalTime().ToString(CultureInfo.InvariantCulture);
 				timelineHeader.NumberOfDays = neuraliumAccountFileInfo.WalletTimelineFileInfo.GetDaysCount();
 			}
 
@@ -447,12 +455,12 @@ namespace Blockchains.Neuralium.Classes.NeuraliumChain.Providers {
 			var results = new List<TimelineDay>();
 
 			if(this.WalletFileInfo.Accounts[accountUuid] is INeuraliumAccountFileInfo neuraliumAccountFileInfo) {
-				results.AddRange(neuraliumAccountFileInfo.WalletTimelineFileInfo.RunQuery<TimelineDay, NeuraliumWalletTimelineDay>(d => d.Where(t => t.Timestamp <= firstday).OrderByDescending(t => t.Timestamp).Skip(skip).Take(take).Select(e => new TimelineDay {Day = e.Timestamp, EndingTotal = e.Total, Id = e.Id}).ToList()));
+				results.AddRange(neuraliumAccountFileInfo.WalletTimelineFileInfo.RunQuery<TimelineDay, NeuraliumWalletTimelineDay>(d => d.Where(t => t.Timestamp <= firstday).OrderByDescending(t => t.Timestamp).Skip(skip).Take(take).Select(e => new TimelineDay {Day = e.Timestamp.ToUniversalTime().ToString(CultureInfo.InvariantCulture), EndingTotal = e.Total, Id = e.Id}).ToList()));
 
 				var dayIds = results.Select(d => d.Id).ToList();
 
 				var dayEntries = neuraliumAccountFileInfo.WalletTimelineFileInfo.RunQuery<TimelineDay.TimelineEntry, NeuraliumWalletTimeline>(d => d.Where(e => dayIds.Contains(e.DayId)).Select(e => new TimelineDay.TimelineEntry {
-					Timestamp = e.Timestamp, SenderAccountId = e.SenderAccountId?.ToString() ?? "", RecipientAccountId = e.RecipientAccountId?.ToString() ?? "", Amount = e.Amount,
+					Timestamp = e.Timestamp.ToUniversalTime().ToString(CultureInfo.InvariantCulture), SenderAccountId = e.SenderAccountId?.ToString() ?? "", RecipientAccountId = e.RecipientAccountId?.ToString() ?? "", Amount = e.Amount,
 					Tips = e.Tips, Total = e.Total, Direction = (byte) e.Direction, CreditType = (byte) e.CreditType,
 					Confirmed = e.Confirmed, DayId = e.DayId, TransactionId = e.TransactionId ?? ""
 				}).OrderByDescending(e => e.Timestamp).ToList());
@@ -482,7 +490,7 @@ namespace Blockchains.Neuralium.Classes.NeuraliumChain.Providers {
 					NeuraliumSynthesizedBlock.NeuraliumSynthesizedElectionResult neuraliumSynthesizedElectionResult = new NeuraliumSynthesizedBlock.NeuraliumSynthesizedElectionResult();
 
 					neuraliumSynthesizedElectionResult.BlockId = synthesizedBlockApi.BlockId;
-					neuraliumSynthesizedElectionResult.Timestamp = synthesizedBlockApi.Timestamp;
+					neuraliumSynthesizedElectionResult.Timestamp = DateTime.Parse(synthesizedBlockApi.Timestamp);
 
 					AccountId delegateAccountId = null;
 

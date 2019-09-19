@@ -16,39 +16,37 @@ namespace Blockchains.Neuralium.Classes.NeuraliumChain.Events.Blocks.Serializati
 	}
 
 	public class NeuraliumBlockComponentsRehydrationFactory : BlockComponentsRehydrationFactory, INeuraliumBlockComponentsRehydrationFactory {
-		public override IElectionContext CreateElectionContext(IByteArray compressedContext) {
+		public override IElectionContext CreateElectionContext(SafeArrayHandle compressedContext) {
 
 			GzipCompression compressor = new GzipCompression();
 
-			IByteArray decompressedContext = compressor.Decompress(compressedContext);
+			using(SafeArrayHandle decompressedContext = compressor.Decompress(compressedContext)) {
 
-			IDataRehydrator electionContextRehydrator = DataSerializationFactory.CreateRehydrator(decompressedContext);
+				IDataRehydrator electionContextRehydrator = DataSerializationFactory.CreateRehydrator(decompressedContext);
 
-			var version = electionContextRehydrator.RehydrateRewind<ComponentVersion<ElectionContextType>>();
+				var version = electionContextRehydrator.RehydrateRewind<ComponentVersion<ElectionContextType>>();
 
-			IElectionContext context = null;
+				IElectionContext context = null;
 
-			if(version.Type == ElectionContextTypes.Instance.Active) {
-				if(version == (1, 0)) {
-					context = new NeuraliumActiveElectionContext();
+				if(version.Type == ElectionContextTypes.Instance.Active) {
+					if(version == (1, 0)) {
+						context = new NeuraliumActiveElectionContext();
+					}
 				}
-			}
 
-			if(version.Type == ElectionContextTypes.Instance.Passive) {
-				if(version == (1, 0)) {
-					context = new NeuraliumPassiveElectionContext();
+				if(version.Type == ElectionContextTypes.Instance.Passive) {
+					if(version == (1, 0)) {
+						context = new NeuraliumPassiveElectionContext();
+					}
 				}
+
+				if(context == null) {
+					throw new ApplicationException("Unrecognized election context version.");
+				}
+
+				context.Rehydrate(electionContextRehydrator, this);
+				return context;
 			}
-
-			if(context == null) {
-				throw new ApplicationException("Unrecognized election context version.");
-			}
-
-			context.Rehydrate(electionContextRehydrator, this);
-
-			decompressedContext.Return();
-
-			return context;
 		}
 
 		public override ITransactionSelectionMethodFactory CreateTransactionSelectionMethodFactory() {

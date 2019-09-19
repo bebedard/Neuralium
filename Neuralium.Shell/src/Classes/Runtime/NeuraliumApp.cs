@@ -161,6 +161,8 @@ namespace Neuralium.Shell.Classes.Runtime {
 		protected virtual void SetAppSettings() {
 
 			GlobalSettings.Instance.SetValues<NeuraliumOptionsSetter>(this.PrepareSettings());
+			
+			Log.Information($"Current software version: {GlobalSettings.SoftwareVersion}");
 		}
 
 		protected virtual GlobalSettings.GlobalSettingsParameters PrepareSettings() {
@@ -169,7 +171,7 @@ namespace Neuralium.Shell.Classes.Runtime {
 			// thats our current version. manually set for now.
 
 			//FileVersionInfo fileVersionInfo = FileVersionInfo.GetVersionInfo(Assembly.GetAssembly(typeof(NeuraliumApp)).Location);
-			parameters.softwareVersion = new SoftwareVersion(0, 0, 1, 2, "TESTNET trial run III", this.VersionValidationCallback);
+			parameters.softwareVersion = new SoftwareVersion(0, 0, 1, 3, "TESTNET trial run III", this.VersionValidationCallback);
 			parameters.appSettings = this.appSettings;
 			parameters.cmdOptions = this.CmdOptions;
 			parameters.peerType = Enums.PeerTypes.FullNode;
@@ -192,7 +194,7 @@ namespace Neuralium.Shell.Classes.Runtime {
 		/// <param name="other"></param>
 		/// <returns></returns>
 		private bool VersionValidationCallback(SoftwareVersion localVersion, SoftwareVersion other) {
-			SoftwareVersion minimumAcceptable = new SoftwareVersion(0, 0, 1, 2);
+			SoftwareVersion minimumAcceptable = new SoftwareVersion(0, 0, 1, 3);
 
 			return (other <= localVersion) && (other >= minimumAcceptable);
 		}
@@ -261,18 +263,19 @@ namespace Neuralium.Shell.Classes.Runtime {
 			bool deleteObsoleteFolder = false;
 			try {
 				if(File.Exists(testnetFlagFilePath)) {
-					IByteArray data = (ByteArray)File.ReadAllBytes(testnetFlagFilePath);
+					using(SafeArrayHandle data = (ByteArray) File.ReadAllBytes(testnetFlagFilePath)) {
 
-					var rehydrator = DataSerializationFactory.CreateRehydrator(data);
-					
-					SoftwareVersion version = new SoftwareVersion();
-					version.Rehydrate(rehydrator);
+						using(var rehydrator = DataSerializationFactory.CreateRehydrator(data)) {
 
-					data.Return();
-					
-					if(version < GlobalSettings.SoftwareVersion) {
-						deleteObsoleteFolder = true;
+							SoftwareVersion version = new SoftwareVersion();
+							version.Rehydrate(rehydrator);
+							
+							if(version < GlobalSettings.SoftwareVersion) {
+								deleteObsoleteFolder = true;
+							}
+						}
 					}
+					
 				} else {
 					deleteObsoleteFolder = true;
 				}

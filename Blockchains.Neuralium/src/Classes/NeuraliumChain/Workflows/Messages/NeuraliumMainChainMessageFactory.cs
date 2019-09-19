@@ -34,10 +34,10 @@ namespace Blockchains.Neuralium.Classes.NeuraliumChain.Workflows.Messages {
 			return new NeuraliumChainSyncMessageFactory(this, (BlockchainServiceSet) this.serviceSet);
 		}
 
-		public override ITargettedMessageSet<IBlockchainEventsRehydrationFactory> RehydrateMessage(IByteArray data, TargettedHeader header, IBlockchainEventsRehydrationFactory rehydrationFactory) {
+		public override ITargettedMessageSet<IBlockchainEventsRehydrationFactory> RehydrateMessage(SafeArrayHandle data, TargettedHeader header, IBlockchainEventsRehydrationFactory rehydrationFactory) {
 			IDataRehydrator dr = DataSerializationFactory.CreateRehydrator(data);
 
-			IByteArray messageBytes = NetworkMessageSet.ExtractMessageBytes(dr);
+			SafeArrayHandle messageBytes = NetworkMessageSet.ExtractMessageBytes(dr);
 			NetworkMessageSet.ResetAfterHeader(dr);
 			IDataRehydrator messageRehydrator = DataSerializationFactory.CreateRehydrator(messageBytes);
 
@@ -59,7 +59,7 @@ namespace Blockchains.Neuralium.Classes.NeuraliumChain.Workflows.Messages {
 			return base.RehydrateMessage(data, header, rehydrationFactory);
 		}
 
-		public override IGossipMessageSet RehydrateGossipMessage(IByteArray data, GossipHeader header, IBlockchainEventsRehydrationFactory rehydrationFactory) {
+		public override IGossipMessageSet RehydrateGossipMessage(SafeArrayHandle data, GossipHeader header, IBlockchainEventsRehydrationFactory rehydrationFactory) {
 
 			if(header.chainId != NeuraliumBlockchainTypes.NeuraliumInstance.Neuralium) {
 				throw new ApplicationException("Chain must be a neuralium chain");

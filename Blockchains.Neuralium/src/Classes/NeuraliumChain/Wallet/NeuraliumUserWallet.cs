@@ -6,14 +6,14 @@ namespace Blockchains.Neuralium.Classes.NeuraliumChain.Wallet {
 
 	public interface INeuraliumUserWallet : IUserWallet {
 
-		[BsonId]
-		new Guid Id { get; set; }
+
 	}
 
 	public class NeuraliumUserWallet : UserWallet, INeuraliumUserWallet {
+		static NeuraliumUserWallet() {
+			BsonMapper.Global.Entity<NeuraliumUserWallet>().Id(x => x.Id);
+		}
 
-		[BsonId]
-		public new Guid Id { get; set; } = Guid.NewGuid();
 	}
 
 }

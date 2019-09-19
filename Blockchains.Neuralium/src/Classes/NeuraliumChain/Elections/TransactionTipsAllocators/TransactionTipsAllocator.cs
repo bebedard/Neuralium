@@ -15,6 +15,6 @@ namespace Blockchains.Neuralium.Classes.NeuraliumChain.Elections.TransactionTips
 			this.TransactionTipsAllocationMethod = TransactionTipsAllocationMethod;
 		}
 
-		public abstract void AllocateTransactionTips(IFinalElectionResults result, Dictionary<AccountId, (IByteArray electionHash, List<TransactionId> transactionIds)> electionResults, Dictionary<TransactionId, Amount> TransactionTip);
+		public abstract void AllocateTransactionTips(IFinalElectionResults result, Dictionary<AccountId, (SafeArrayHandle electionHash, List<TransactionId> transactionIds)> electionResults, Dictionary<TransactionId, Amount> TransactionTip);
 	}
 }

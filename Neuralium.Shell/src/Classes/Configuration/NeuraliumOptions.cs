@@ -50,6 +50,9 @@ namespace Neuralium.Shell.Classes.Configuration {
 		[Option('p', "port", Default = null, Required = false, HelpText = "Will skip the RPC server startup if set.")]
 		public int? Port { get; set; }
 
+		[Option("array-pools", Default = null, Required = false, HelpText = "do we use large buffers?.")]
+		public bool? UseArrayPools { get; set; }
+		
 		// // Omitting long name, defaults to name of property, ie "--verbose"
 		// [Option(Default = false, HelpText = "Prints all messages to standard output.")]
 		// public bool Verbose { get; set; }

@@ -17,7 +17,7 @@ namespace Blockchains.Neuralium.Classes.NeuraliumChain.Workflows.Creation.Transa
 		private readonly Guid accountUuid;
 		private readonly Amount amount;
 		private readonly TransactionId guid;
-		private readonly IByteArray hash;
+		private readonly SafeArrayHandle hash = SafeArrayHandle.Create();
 		private readonly AccountId targetAccountId;
 		private readonly Amount tip;
 

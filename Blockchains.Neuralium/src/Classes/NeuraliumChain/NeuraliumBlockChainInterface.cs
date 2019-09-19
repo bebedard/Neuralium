@@ -20,7 +20,7 @@ using Neuralia.Blockchains.Tools.Threading;
 namespace Blockchains.Neuralium.Classes.NeuraliumChain {
 	public interface INeuraliumBlockChainInterface : IBlockChainInterface<INeuraliumCentralCoordinator, INeuraliumChainComponentProvider> {
 
-		void SubmitDebugMessage(Action<(TransactionId, IByteArray)> callback);
+		void SubmitDebugMessage(Action<(TransactionId, SafeArrayHandle)> callback);
 
 		TaskResult<TotalAPI> QueryWalletTotal(Guid accountId);
 
@@ -65,7 +65,7 @@ namespace Blockchains.Neuralium.Classes.NeuraliumChain {
 			}
 		}
 
-		public void SubmitDebugMessage(Action<(TransactionId, IByteArray)> callback) {
+		public void SubmitDebugMessage(Action<(TransactionId, SafeArrayHandle)> callback) {
 			IInsertDebugMessageWorkflow workflow = this.NeuraliumChainFactoryProvider.WorkflowFactory.CreateDebugMessageWorkflow();
 
 			workflow.Success += w => {
@@ -77,7 +77,7 @@ namespace Blockchains.Neuralium.Classes.NeuraliumChain {
 			this.centralCoordinator.PostWorkflow(workflow);
 		}
 
-		public void SubmitDebugConfirm(TransactionId uid, IByteArray hash) {
+		public void SubmitDebugConfirm(TransactionId uid, SafeArrayHandle hash) {
 			IInsertDebugConfirmWorkflow workflow = this.NeuraliumChainFactoryProvider.WorkflowFactory.CreateDebugConfirmChainWorkflow(uid, hash);
 
 			workflow.Success += w => {

@@ -28,7 +28,6 @@ using Neuralia.Blockchains.Core.General.Types;
 using Neuralia.Blockchains.Core.P2p.Connections;
 using Neuralia.Blockchains.Core.Services;
 using Neuralia.Blockchains.Tools.Data;
-using Neuralia.Blockchains.Tools.Data.Allocation;
 using Neuralia.Blockchains.Tools.Serialization;
 using Neuralium.Shell.Classes.Configuration;
 using Neuralium.Shell.Classes.Services;
@@ -106,6 +105,12 @@ namespace Neuralium.Shell.Classes.Runtime {
 			}
 #endif
 
+			if(items[0] == "create") {
+				this.neuraliumBlockChainInterface.CreateNewWallet( new CorrelationContext(), "test",false, false, false, null, false);
+
+				return;
+			}
+			
 			if(items[0] == "con") {
 				var conns = this.neuraliumBlockChainInterface.QueryPeersList();
 
@@ -185,7 +190,7 @@ namespace Neuralium.Shell.Classes.Runtime {
 				cc.InitializeNew();
 				TimelineHeader result = await this.neuraliumBlockChainInterface.QueryNeuraliumTimelineHeader(Guid.Empty);
 
-				var result2 = await this.neuraliumBlockChainInterface.QueryNeuraliumTimelineSection(Guid.Empty, result.FirstDay, 0, 5);
+				var result2 = await this.neuraliumBlockChainInterface.QueryNeuraliumTimelineSection(Guid.Empty, DateTime.Parse(result.FirstDay), 0, 5);
 
 				return;
 			}
@@ -205,7 +210,7 @@ namespace Neuralium.Shell.Classes.Runtime {
 				//var ff = this.test(gg.ConfirmedGeneralTransactions.Values.ToList()[5]);
 				// GzipCompression compressor = new GzipCompression();
 				//
-				// 	IByteArray bytes = compressor.Decompress((ByteArray) );
+				// 	ArrayWrapper bytes = compressor.Decompress((ByteArray) );
 				// 	
 				// this.neuraliumBlockChainInterface.SyncBlockchainExternal(txt);
 				//
@@ -318,7 +323,7 @@ namespace Neuralium.Shell.Classes.Runtime {
 				IBlock results = await this.neuraliumBlockChainInterface.LoadBlock(1).awaitableTask;
 
 				ByteArray previousHash = new byte[] {1, 2, 3, 4, 5};
-				IByteArray hash1 = BlockchainHashingUtils.GenerateBlockHash(results, previousHash);
+				SafeArrayHandle hash1 = BlockchainHashingUtils.GenerateBlockHash(results, previousHash);
 
 				Console.WriteLine("Key load done...");
 			}
@@ -412,7 +417,7 @@ namespace Neuralium.Shell.Classes.Runtime {
 				//								TransactionId uuid = TransactionId.Parse(items[1]);
 				//								this.neuraliumBlockChainInterface.SubmitDebugConfirm(uuid, hash: (ByteArray)new byte[0]);
 				//							} else {
-				//								foreach((TransactionId, IByteArray) item in this.Guids) {
+				//								foreach((TransactionId, ArrayWrapper) item in this.Guids) {
 				//									this.neuraliumBlockChainInterface.SubmitDebugConfirm(item.Item1, hash: item.Item2);
 				//								}
 				//							}

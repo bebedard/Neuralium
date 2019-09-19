@@ -20,7 +20,7 @@ using Neuralia.Blockchains.Tools.Data;
 namespace Blockchains.Neuralium.Classes.NeuraliumChain.Workflows.Factories {
 	public interface INeuraliumChainWorkflowFactory : IChainWorkflowFactory<INeuraliumCentralCoordinator, INeuraliumChainComponentProvider> {
 
-		IInsertDebugConfirmWorkflow CreateDebugConfirmChainWorkflow(TransactionId guid, IByteArray hash);
+		IInsertDebugConfirmWorkflow CreateDebugConfirmChainWorkflow(TransactionId guid, SafeArrayHandle hash);
 
 		IInsertDebugMessageWorkflow CreateDebugMessageWorkflow();
 
@@ -42,7 +42,7 @@ namespace Blockchains.Neuralium.Classes.NeuraliumChain.Workflows.Factories {
 			return new NeuraliumCreateChangeKeyTransactionWorkflow(this.centralCoordinator, note, changingKeyOrdinal, correlationContext);
 		}
 
-		public virtual IInsertDebugConfirmWorkflow CreateDebugConfirmChainWorkflow(TransactionId guid, IByteArray hash) {
+		public virtual IInsertDebugConfirmWorkflow CreateDebugConfirmChainWorkflow(TransactionId guid, SafeArrayHandle hash) {
 			return new InsertDebugConfirmWorkflow(guid, hash, this.centralCoordinator);
 		}
 

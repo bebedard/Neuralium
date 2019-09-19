@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
+using System.Threading;
 using System.Threading.Tasks;
 using Blockchains.Neuralium.Classes;
 using Blockchains.Neuralium.Classes.NeuraliumChain;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Server.Kestrel.Transport.Abstractions.Internal;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -70,6 +72,7 @@ namespace Neuralium.Shell.Classes.Services {
 
 		public IHubContext<RPC_HUB, RCP_CLIENT> hubContext { get; private set; }
 
+		private CancellationTokenSource cancellationToken;
 		public void Start() {
 			if(GlobalSettings.ApplicationSettings.RpcMode != AppSettingsBase.RpcModes.None) {
 				try {
@@ -83,7 +86,9 @@ namespace Neuralium.Shell.Classes.Services {
 						// get the signalr hub
 						this.hubContext = this.rpcWebHost.Services.GetService<IHubContext<RPC_HUB, RCP_CLIENT>>();
 						this.rpcProvider.HubContext = this.hubContext;
-						this.rpcTask = this.rpcWebHost.RunAsync();
+						
+						this.cancellationToken = new CancellationTokenSource();
+						this.rpcTask = this.rpcWebHost.RunAsync(this.cancellationToken.Token);
 					}
 
 					this.IsStarted = true;
@@ -96,6 +101,7 @@ namespace Neuralium.Shell.Classes.Services {
 
 		public void Stop() {
 			try {
+				this.cancellationToken.Cancel();
 				this.rpcWebHost?.StopAsync(TimeSpan.FromSeconds(5));
 			} catch(Exception ex) {
 				//TODO: im disabling this for the demo. restore error handling!!
@@ -103,6 +109,8 @@ namespace Neuralium.Shell.Classes.Services {
 				this.rpcWebHost?.Dispose();
 				this.rpcWebHost = null;
 				this.IsStarted = false;
+				this.cancellationToken?.Dispose();
+				this.cancellationToken = null;
 			}
 		}
 
@@ -137,8 +145,8 @@ namespace Neuralium.Shell.Classes.Services {
 			IConfigurationRoot config = this.GetAspnetCoreConfiguration(args);
 			int port = config.GetValue<int?>("port") ?? 5050;
 
-			IWebHostBuilder builder = new WebHostBuilder().UseEnvironment("Development").UseConfiguration(config).UseContentRoot(Directory.GetCurrentDirectory()).UseKestrel(options => {
-
+			IWebHostBuilder builder = new WebHostBuilder().UseConfiguration(config).UseContentRoot(Directory.GetCurrentDirectory()).UseKestrel(options => {
+				
 				IPAddress listenAddress = IPAddress.Loopback;
 
 				if(GlobalSettings.ApplicationSettings.RpcBindMode == AppSettingsBase.RpcBindModes.Any) {

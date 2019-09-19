@@ -6,13 +6,13 @@ namespace Blockchains.Neuralium.Classes.NeuraliumChain.DataStructures.Timeline {
 
 		public readonly List<TimelineEntry> Entries = new List<TimelineEntry>();
 
-		public DateTime Day { get; set; }
+		public string Day { get; set; }
 		public int Id { get; set; }
 		public decimal EndingTotal { get; set; }
 
 		public class TimelineEntry {
 
-			public DateTime Timestamp { get; set; }
+			public string Timestamp { get; set; }
 
 			public string TransactionId { get; set; }
 			public string SenderAccountId { get; set; }

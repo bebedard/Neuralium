@@ -11,9 +11,9 @@ namespace Blockchains.Neuralium.Classes.NeuraliumChain.Workflows.debugging {
 
 	public class InsertDebugConfirmWorkflow : NeuraliumChainWorkflow, IInsertDebugConfirmWorkflow {
 		private readonly TransactionId guid;
-		private readonly IByteArray hash;
+		private readonly SafeArrayHandle hash = SafeArrayHandle.Create();
 
-		public InsertDebugConfirmWorkflow(TransactionId guid, IByteArray hash, INeuraliumCentralCoordinator centralCoordinator) : base(centralCoordinator) {
+		public InsertDebugConfirmWorkflow(TransactionId guid, SafeArrayHandle hash, INeuraliumCentralCoordinator centralCoordinator) : base(centralCoordinator) {
 			this.guid = guid;
 			this.hash = hash;
 		}

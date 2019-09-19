@@ -1,5 +1,6 @@
 using Blockchains.Neuralium.Classes;
 using Neuralia.Blockchains.Core.Configuration;
+using Neuralia.Blockchains.Tools.Data;
 
 namespace Neuralium.Shell.Classes.Configuration {
 	public class NeuraliumOptionsSetter<A, O> : OptionsSetter<A, O>
@@ -47,6 +48,12 @@ namespace Neuralium.Shell.Classes.Configuration {
 				} else if(cmdOptions.SerializationType.ToUpper() == "FEEDER") {
 					appSettings.SerializationType = AppSettingsBase.SerializationTypes.Feeder;
 				}
+			}
+			
+			ByteArray.RENT_LARGE_BUFFERS = appSettings.UseArrayPools;
+			
+			if(cmdOptions.UseArrayPools.HasValue) {
+				ByteArray.RENT_LARGE_BUFFERS = cmdOptions.UseArrayPools.Value;
 			}
 		}
 	}

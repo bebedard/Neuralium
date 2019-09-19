@@ -14,7 +14,7 @@ namespace Blockchains.Neuralium.Classes.NeuraliumChain.Elections.TransactionTips
 		public LowestToHighestTransactionTipsAllocator(ITransactionTipsAllocationMethod TransactionTipsAllocationMethod) : base(TransactionTipsAllocationMethod) {
 		}
 
-		public override void AllocateTransactionTips(IFinalElectionResults result, Dictionary<AccountId, (IByteArray electionHash, List<TransactionId> transactionIds)> electionResults, Dictionary<TransactionId, Amount> transactionTips) {
+		public override void AllocateTransactionTips(IFinalElectionResults result, Dictionary<AccountId, (SafeArrayHandle electionHash, List<TransactionId> transactionIds)> electionResults, Dictionary<TransactionId, Amount> transactionTips) {
 
 			var primeElectionResults = electionResults.Where(e => result.ElectedCandidates.ContainsKey(e.Key)).ToDictionary(e => e.Key, e => e.Value);
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http.Connections;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -45,15 +46,16 @@ namespace Neuralium.Shell.Classes.Runtime {
 			if(this.appSettings.RpcMode.HasFlag(AppSettingsBase.RpcModes.Signal)) {
 				services.AddSignalR(hubOptions => {
 					//hubOptions.SupportedProtocols.Clear();
-
 #if TESTNET || DEVNET
 					hubOptions.EnableDetailedErrors = true;
 #endif
-					hubOptions.ClientTimeoutInterval = TimeSpan.FromMinutes(1);
-					hubOptions.KeepAliveInterval = TimeSpan.FromMinutes(1);
-				}).AddJsonProtocol(options => {
-					options.PayloadSerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+					hubOptions.ClientTimeoutInterval = TimeSpan.FromMinutes(3);
+					hubOptions.KeepAliveInterval = TimeSpan.FromSeconds(15);
+				}).AddMessagePackProtocol(o => {
+					
 				});
+				
+
 			}
 
 		}
@@ -66,6 +68,7 @@ namespace Neuralium.Shell.Classes.Runtime {
 					routes.MapHub<RPC_HUB>("/signal", option => {
 						option.ApplicationMaxBufferSize = 0;
 						option.TransportMaxBufferSize = 0;
+						option.Transports = HttpTransportType.WebSockets;
 					});
 				});
 			}

@@ -59,7 +59,8 @@ namespace Neuralium.Shell.Classes.General {
 		Task KeyGenerationEnded(int correlationId, string keyName, int keyIndex, int keyTotal);
 		Task KeyGenerationMessage(int correlationId, string keyName, string message, int keyIndex, int keyTotal);
 		Task KeyGenerationError(int correlationId, string keyName, string error);
-
+		Task KeyGenerationPercentageUpdate(int correlationId, string keyName, int percentage);
+		
 		Task AccountPublicationStarted(int correlationId);
 		Task AccountPublicationEnded(int correlationId);
 
@@ -350,6 +351,12 @@ namespace Neuralium.Shell.Classes.General {
 						// alert the client of the event
 						return this.HubContext?.Clients?.All?.KeyGenerationEnded(sessionCorrelationId.CorrelationId, (string) extraParameters[0], (int) extraParameters[1], (int) extraParameters[2]);
 					};
+				} else if(eventType == BlockchainSystemEventTypes.Instance.KeyGenerationPercentageUpdate) {
+					action = async (sessionCorrelationId, resetEvent) => {
+						// alert the client of the event
+						return this.HubContext?.Clients?.All?.KeyGenerationPercentageUpdate(sessionCorrelationId.CorrelationId, (string) extraParameters[0], (int) extraParameters[1]);
+						
+					};
 				} else if(eventType == BlockchainSystemEventTypes.Instance.Alert) {
 					action = async (sessionCorrelationId, resetEvent) => {
 
@@ -408,16 +415,19 @@ namespace Neuralium.Shell.Classes.General {
 				}
 			}
 
+			object actionreasult = null;
 			if(correlationContext.IsNew) {
 				// if we had no previous correlation id, then its an uncorrelated event, so we give it one
 				result = this.CreateServerLongRunningEvent(action);
 
-				return await result.task.Result;
+				actionreasult = await result.task.Result;
+			} else {
+				LongRunningEvents autoEvent = this.longRunningEvents.ContainsKey(correlationContext.CorrelationId) ? this.longRunningEvents[correlationContext.CorrelationId] : null;
+
+				actionreasult = await action(correlationContext, autoEvent);
 			}
 
-			LongRunningEvents autoEvent = this.longRunningEvents.ContainsKey(correlationContext.CorrelationId) ? this.longRunningEvents[correlationContext.CorrelationId] : null;
-
-			return await action(correlationContext, autoEvent);
+			return actionreasult;
 		}
 
 		public void TotalPeersUpdated(int count) {
@@ -822,7 +832,7 @@ namespace Neuralium.Shell.Classes.General {
 
 		public async Task<byte[]> SignXmssMessage(ushort chainType, Guid accountUuid, byte[] message) {
 			try {
-				IByteArray signature = await this.GetChainInterface(chainType).SignXmssMessage(accountUuid, (ByteArray) message).awaitableTask;
+				SafeArrayHandle signature = await this.GetChainInterface(chainType).SignXmssMessage(accountUuid, (ByteArray) message).awaitableTask;
 
 				var result = signature.ToExactByteArrayCopy();
 

@@ -56,14 +56,15 @@ namespace Blockchains.Neuralium.Classes.NeuraliumChain.Events.Serialization {
 
 		public override ITransaction CreateTransaction(IDehydratedTransaction dehydratedTransaction) {
 
-			IDataRehydrator rehydrator = DataSerializationFactory.CreateRehydrator(dehydratedTransaction.Header);
+			using(IDataRehydrator rehydrator = DataSerializationFactory.CreateRehydrator(dehydratedTransaction.Header)) {
 
-			var version = new ComponentVersion<TransactionType>();
-			version.Rehydrate(rehydrator);
+				var version = new ComponentVersion<TransactionType>();
+				version.Rehydrate(rehydrator);
 
-			rehydrator.Rewind2Start();
+				rehydrator.Rewind2Start();
 
-			return this.CreateTransation(version);
+				return this.CreateTransation(version);
+			}
 		}
 
 		public override IKeyedTransaction CreateKeyedTransaction(IDehydratedTransaction dehydratedTransaction) {
