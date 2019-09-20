@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -135,15 +136,13 @@ namespace Neuralium.Shell.Classes.General {
 
 		private readonly object locker = new object();
 		private readonly Dictionary<int, LongRunningEvents> longRunningEvents = new Dictionary<int, LongRunningEvents>();
-
-		private List<WalletAccountAPI> accounts;
-
+		
 		private bool logMessagesEnabled = true;
 
-		private Timer maintenanceTimer;
+		//private Timer maintenanceTimer;
 
 		public RpcProvider() {
-			this.maintenanceTimer = new Timer(this.TimerCallback, this, TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(10));
+			//this.maintenanceTimer = new Timer(this.TimerCallback, this, TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(10));
 		}
 
 		public IHubContext<RPC_HUB, RCP_CLIENT> HubContext { get; set; }
@@ -583,9 +582,9 @@ namespace Neuralium.Shell.Classes.General {
 			return await this.CreateClientLongRunningEvent(async (correlationContext, resetEvent) => await this.GetChainInterface(chainType).LoadWallet(correlationContext).awaitableTask);
 		}
 
-		public async Task<int> CreateNewWallet(ushort chainType, string accountName, bool encryptWallet, bool encryptKey, bool encryptKeysIndividually, Dictionary<int, string> passphrases, bool publishAccount) {
+		public async Task<int> CreateNewWallet(ushort chainType, string accountName, bool encryptWallet, bool encryptKey, bool encryptKeysIndividually, ImmutableDictionary<string, string> passphrases, bool publishAccount) {
 			try {
-				return await this.CreateClientLongRunningEvent(async (correlationContext, resetEvent) => await this.GetChainInterface(chainType).CreateNewWallet(correlationContext, accountName, encryptWallet, encryptKey, encryptKeysIndividually, passphrases, publishAccount).awaitableTask);
+				return await this.CreateClientLongRunningEvent(async (correlationContext, resetEvent) => await this.GetChainInterface(chainType).CreateNewWallet(correlationContext, accountName, encryptWallet, encryptKey, encryptKeysIndividually, passphrases?.ToImmutableDictionary(e => int.Parse(e.Key), e => e.Value), publishAccount).awaitableTask);
 			} catch(Exception ex) {
 				Log.Error(ex, "Failed to load wallet");
 
@@ -649,9 +648,9 @@ namespace Neuralium.Shell.Classes.General {
 			}
 		}
 
-		public async Task<int> CreateAccount(ushort chainType, string accountName, bool publishAccount, bool encryptKeys, bool encryptKeysIndividually, Dictionary<int, string> passphrases) {
+		public async Task<int> CreateAccount(ushort chainType, string accountName, bool publishAccount, bool encryptKeys, bool encryptKeysIndividually, ImmutableDictionary<string, string> passphrases) {
 			try {
-				return await this.CreateClientLongRunningEvent(async (correlationContext, resetEvent) => await this.GetChainInterface(chainType).CreateAccount(correlationContext, accountName, publishAccount, encryptKeys, encryptKeysIndividually, passphrases).awaitableTask);
+				return await this.CreateClientLongRunningEvent(async (correlationContext, resetEvent) => await this.GetChainInterface(chainType).CreateAccount(correlationContext, accountName, publishAccount, encryptKeys, encryptKeysIndividually, passphrases?.ToImmutableDictionary(e => int.Parse(e.Key), e => e.Value)).awaitableTask);
 			} catch(Exception ex) {
 				Log.Error(ex, "Failed to create account");
 
@@ -808,9 +807,9 @@ namespace Neuralium.Shell.Classes.General {
 			}
 		}
 
-		public Task<object> QueryElectionContext(ushort chainType, long blockId) {
+		public async Task<object> QueryElectionContext(ushort chainType, long blockId) {
 			try {
-				return this.GetChainInterface(chainType).QueryElectionContext(blockId).awaitableTask;
+				return await this.GetChainInterface(chainType).QueryElectionContext(blockId).awaitableTask;
 
 			} catch(Exception ex) {
 				Log.Error(ex, "Failed to query block election details");

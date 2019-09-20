@@ -146,7 +146,7 @@ namespace Blockchains.Neuralium.Classes.NeuraliumChain.Providers {
 
 				return new NeuraliumWalletTransactionHistoryHeaderAPI {
 					TransactionId = t.TransactionId, Sender = transactionId.Account.ToString(), Timestamp = t.Timestamp.ToString(), Status = t.Status,
-					Version = new {transactionType = version.Type.Value, major = version.Major.Value, minor = version.Minor.Value}, Recipient = t.Recipient, Local = t.Local, Amount = t.Amount,
+					Version = new VersionAPI{TransactionType = version.Type.Value.Value, Major = version.Major.Value, Minor = version.Minor.Value}, Recipient = t.Recipient, Local = t.Local, Amount = t.Amount,
 					Tip = t.Tip, Note = t.Note
 				};
 			}).OrderByDescending(t => t.Timestamp).ToList());
@@ -172,7 +172,7 @@ namespace Blockchains.Neuralium.Classes.NeuraliumChain.Providers {
 
 				return new NeuraliumWalletTransactionHistoryDetailsAPI {
 					TransactionId = t.TransactionId, Sender = new TransactionId(t.TransactionId).Account.ToString(), Timestamp = t.Timestamp.ToString(), Status = t.Status,
-					Version = new {transactionType = version.Type.Value, major = version.Major.Value, minor = version.Minor.Value}, Recipient = t.Recipient, Contents = t.Contents, Local = t.Local,
+					Version = new VersionAPI{TransactionType = version.Type.Value.Value, Major = version.Major.Value, Minor = version.Minor.Value}, Recipient = t.Recipient, Contents = t.Contents, Local = t.Local,
 					Amount = t.Amount, Tip = t.Tip, Note = t.Note
 				};
 			}).ToList());

@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Threading.Tasks;
+using MessagePack;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using Neuralia.Blockchains.Common.Classes.Blockchains.Common.DataStructures.ExternalAPI.Wallet;
 using Neuralia.Blockchains.Core.Services;
 using Neuralium.Shell.Classes.General;
 
@@ -13,6 +16,7 @@ namespace Neuralium.Shell.Controllers {
 
 	public interface IRpcServer : IRpcServerMethods {
 	}
+
 
 	[Route("/signal")]
 	public class RpcHub<RCP_CLIENT> : Hub<RCP_CLIENT>, IRpcServer
@@ -181,15 +185,15 @@ namespace Neuralium.Shell.Controllers {
 			return this.rpcProvider.QueryBlockBinaryTransactions(chainType, blockId);
 		}
 
-		public Task<int> CreateAccount(ushort chainType, string accountName, bool publishAccount, bool encryptKeys, bool encryptKeysIndividually, Dictionary<int, string> passphrases) {
+		public Task<int> CreateAccount(ushort chainType, string accountName, bool publishAccount, bool encryptKeys, bool encryptKeysIndividually, ImmutableDictionary<string, string> passphrases) {
 			return this.rpcProvider.CreateAccount(chainType, accountName, publishAccount, encryptKeys, encryptKeysIndividually, passphrases);
 		}
 
 		public Task<bool> SetActiveAccount(ushort chainType, Guid accountUuid) {
 			return this.rpcProvider.SetActiveAccount(chainType, accountUuid);
 		}
-
-		public Task<int> CreateNewWallet(ushort chainType, string accountName, bool encryptWallet, bool encryptKey, bool encryptKeysIndividualy, Dictionary<int, string> passphrases, bool publishAccount) {
+		
+		public Task<int> CreateNewWallet(ushort chainType, string accountName, bool encryptWallet, bool encryptKey, bool encryptKeysIndividualy, ImmutableDictionary<string, string> passphrases, bool publishAccount) {
 			return this.rpcProvider.CreateNewWallet(chainType, accountName, encryptWallet, encryptKey, encryptKeysIndividualy, passphrases, publishAccount);
 		}
 
@@ -208,8 +212,9 @@ namespace Neuralium.Shell.Controllers {
 		public Task<object> QueryWalletTransationHistoryDetails(ushort chainType, Guid accountUuid, string transactionId) {
 			return this.rpcProvider.QueryWalletTransationHistoryDetails(chainType, accountUuid, transactionId);
 		}
-
+		
 		public Task<List<object>> QueryWalletAccounts(ushort chainType) {
+			
 			return this.rpcProvider.QueryWalletAccounts(chainType);
 		}
 
@@ -233,8 +238,8 @@ namespace Neuralium.Shell.Controllers {
 			return this.rpcProvider.CreateNextXmssKey(chainType, accountUuid, ordinal);
 		}
 
-		public Task<int> SendNeuraliums(string targetAccountId, decimal amount, decimal fees, string note) {
-			return this.rpcProvider.SendNeuraliums(targetAccountId, amount, fees, note);
+		public Task<int> SendNeuraliums(string targetAccountId, decimal amount, decimal tip, string note) {
+			return this.rpcProvider.SendNeuraliums(targetAccountId, amount, tip, note);
 		}
 
 		public Task<object> QueryNeuraliumTimelineHeader(Guid accountUuid) {

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -147,7 +148,7 @@ namespace Neuralium.Shell.Classes.Runtime {
 				passprhases.Add(2, "qwerty2");
 				passprhases.Add(3, "qwerty3");
 
-				bool result = await this.neuraliumBlockChainInterface.CreateNewWallet(new CorrelationContext(), items[1], true, true, true, passprhases, false).awaitableTask;
+				bool result = await this.neuraliumBlockChainInterface.CreateNewWallet(new CorrelationContext(), items[1], true, true, true, passprhases.ToImmutableDictionary(), false).awaitableTask;
 
 				Console.WriteLine($"create new account, result {result}");
 

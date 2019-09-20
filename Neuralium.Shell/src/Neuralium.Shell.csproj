@@ -28,6 +28,7 @@
     <PackageReference Include="Neuralia.Data.HashFunction.xxHash" Version="1.0.0" />
 
 
+    <PackageReference Include="MessagePack.ImmutableCollection" Version="1.7.3.7" />
       <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.HttpsPolicy" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />

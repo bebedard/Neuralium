@@ -16,7 +16,7 @@ namespace Blockchains.Neuralium.Classes {
 			this.NeuraliumMiningPrimeElected = this.CreateChildConstant();
 
 			//for debugging
-			this.PrintValues(",");
+			//this.PrintValues(",");
 		}
 
 		public static NeuraliumBlockchainSystemEventTypes NeuraliumInstance { get; } = new NeuraliumBlockchainSystemEventTypes();

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using MessagePack.ImmutableCollection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http.Connections;
@@ -49,10 +51,15 @@ namespace Neuralium.Shell.Classes.Runtime {
 #if TESTNET || DEVNET
 					hubOptions.EnableDetailedErrors = true;
 #endif
-					hubOptions.ClientTimeoutInterval = TimeSpan.FromMinutes(3);
-					hubOptions.KeepAliveInterval = TimeSpan.FromSeconds(15);
-				}).AddMessagePackProtocol(o => {
-					
+					hubOptions.ClientTimeoutInterval = TimeSpan.FromMinutes(1);
+					hubOptions.KeepAliveInterval = TimeSpan.FromSeconds(30);
+
+				}).AddMessagePackProtocol(options => {
+					options.FormatterResolvers = new List<MessagePack.IFormatterResolver>()
+					{
+						ImmutableCollectionResolver.Instance,
+						MessagePack.Resolvers.StandardResolver.Instance
+					};
 				});
 				
 

@@ -73,8 +73,8 @@ namespace Neuralium.Shell.Classes.Runtime {
 			
 			
 #if DEBUG
-			services.AddSingleton<INeuraliumApp, NeuraliumApp>();
-			//services.AddSingleton<INeuraliumApp, NeuraliumAppConsole>();
+			//services.AddSingleton<INeuraliumApp, NeuraliumApp>();
+			services.AddSingleton<INeuraliumApp, NeuraliumAppConsole>();
 #else
 			services.AddSingleton<INeuraliumApp, NeuraliumApp>();
 #endif
