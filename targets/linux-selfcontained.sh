@@ -2,7 +2,7 @@
 
 cd ../
 
-dotnet restore
+dotnet restore --no-cache
 
 
 if  dotnet publish ./Neuralium/src/Neuralium.csproj --self-contained -c Release -o ../../build -r linux-x64 ; then
