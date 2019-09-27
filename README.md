@@ -1,4 +1,5 @@
 # Neuralium
+[![Build Status](http://jenkins.neuralium.com/buildStatus/icon?job=Neuralium.Node-Linux64)](http://jenkins.neuralium.com/job/Neuralium.Node-Linux64/)
 
 ##### Version:  Trial run III
 
