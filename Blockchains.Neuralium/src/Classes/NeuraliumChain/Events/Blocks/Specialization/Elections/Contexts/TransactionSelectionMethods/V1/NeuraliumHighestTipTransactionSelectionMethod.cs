@@ -69,7 +69,7 @@ namespace Blockchains.Neuralium.Classes.NeuraliumChain.Events.Blocks.Specializat
 
 				var group = tipAvailableTransactions.GroupBy(t => {
 
-					DateTime timestamp = this.timeService.GetTransactionDateTime(t.transactionIds, DateTime.Now.AddYears(-1));
+					DateTime timestamp = this.timeService.GetTransactionDateTime(t.transactionIds, DateTime.UtcNow.AddYears(-1));
 
 					// remove the minutes and seconds so we can group by hour
 					return new DateTime(timestamp.Year, timestamp.Month, timestamp.Day, timestamp.Hour, 0, 0);

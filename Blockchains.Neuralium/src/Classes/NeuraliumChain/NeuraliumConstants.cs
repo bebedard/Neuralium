@@ -19,8 +19,8 @@ namespace Blockchains.Neuralium.Classes.NeuraliumChain {
 		public const BlockChannelUtils.BlockChannelTypes CompressedBlockchainChannels = BlockChannelUtils.BlockChannelTypes.LowHeader | BlockChannelUtils.BlockChannelTypes.Contents;
 
 		public const int MAIN_NETWORK_ID = 0x51A21052;
-		public const int TEST_NETWORK_ID = 0x10B61354;
-		public const int DEV_NETWORK_ID = 0x10C61253;
+		public const int TEST_NETWORK_ID = 0x10B62354;
+		public const int DEV_NETWORK_ID = 0x10A61253;
 
 		public const int SAFU_ACCREDITATION_CERTIFICATE_ID = 9;
 	}

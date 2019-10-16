@@ -1,19 +1,16 @@
 using System;
 using System.Collections.Generic;
-using MessagePack;
 
 namespace Blockchains.Neuralium.Classes.NeuraliumChain.DataStructures.Timeline {
 	
-	[MessagePackObject(keyAsPropertyName: true)]
 	public class TimelineDay {
 
-		public readonly List<TimelineEntry> Entries = new List<TimelineEntry>();
+		public List<TimelineEntry> Entries  { get; set; } = new List<TimelineEntry>();
 
 		public string Day { get; set; }
 		public int Id { get; set; }
 		public decimal EndingTotal { get; set; }
 
-		[MessagePackObject(keyAsPropertyName: true)]
 		public class TimelineEntry {
 
 			public string Timestamp { get; set; }

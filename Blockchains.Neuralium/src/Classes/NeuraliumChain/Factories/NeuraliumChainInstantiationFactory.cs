@@ -22,6 +22,8 @@ namespace Blockchains.Neuralium.Classes.NeuraliumChain.Factories {
 	/// </summary>
 	public class NeuraliumChainInstantiationFactory : NeuraliumChainInstantiationFactoryGenerix<NeuraliumChainInstantiationFactory> {
 
+		public TimeSpan? TaskCheckSpan { get; set; }
+
 		public override INeuraliumBlockChainInterface CreateNewChain(IServiceProvider serviceProvider, ChainRuntimeConfiguration chainRuntimeConfiguration = null, IFileSystem fileSystem = null) {
 
 			chainRuntimeConfiguration = chainRuntimeConfiguration ?? new ChainRuntimeConfiguration();
@@ -32,7 +34,7 @@ namespace Blockchains.Neuralium.Classes.NeuraliumChain.Factories {
 
 			INeuraliumCentralCoordinator centralCoordinator = this.CreateCentralCoordinator(serviceSet, chainRuntimeConfiguration, fileSystem);
 
-			NeuraliumBlockChainInterface chainInterface = new NeuraliumBlockChainInterface(centralCoordinator);
+			NeuraliumBlockChainInterface chainInterface = new NeuraliumBlockChainInterface(centralCoordinator, this.TaskCheckSpan);
 
 			centralCoordinator.InitializeContents(this.CreateChainComponents(centralCoordinator, chainInterface));
 

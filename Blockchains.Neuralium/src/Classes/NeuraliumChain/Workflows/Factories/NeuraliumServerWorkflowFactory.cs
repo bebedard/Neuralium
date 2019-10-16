@@ -16,14 +16,18 @@ namespace Blockchains.Neuralium.Classes.NeuraliumChain.Workflows.Factories {
 		public NeuraliumServerWorkflowFactory(INeuraliumCentralCoordinator centralCoordinator) : base(centralCoordinator) {
 		}
 
-		public override INetworkingWorkflow<IBlockchainEventsRehydrationFactory> CreateResponseWorkflow(IBlockchainTriggerMessageSet messageSet, PeerConnection peerConnectionn) {
+		public override INetworkingWorkflow<IBlockchainEventsRehydrationFactory> CreateResponseWorkflow(IBlockchainTriggerMessageSet messageSet, PeerConnection peerConnection) {
 			this.ValidateTrigger<NeuraliumChainSyncTrigger>(messageSet);
 
 			if((messageSet.BaseMessage.WorkflowType == WorkflowIDs.CHAIN_SYNC) && (messageSet.BaseMessage != null) && messageSet.BaseMessage is NeuraliumChainSyncTrigger) {
-				return new NeuraliumServerChainSyncWorkflow(messageSet as BlockchainTriggerMessageSet<NeuraliumChainSyncTrigger>, peerConnectionn, this.centralCoordinator);
+				return this.CreateNeuraliumServerChainSyncWorkflow(messageSet, peerConnection);
 			}
 
 			return null;
+		}
+
+		public virtual INetworkingWorkflow<IBlockchainEventsRehydrationFactory> CreateNeuraliumServerChainSyncWorkflow(IBlockchainTriggerMessageSet messageSet, PeerConnection peerConnection) {
+			return new NeuraliumServerChainSyncWorkflow(messageSet as BlockchainTriggerMessageSet<NeuraliumChainSyncTrigger>, peerConnection, this.centralCoordinator);
 		}
 	}
 }

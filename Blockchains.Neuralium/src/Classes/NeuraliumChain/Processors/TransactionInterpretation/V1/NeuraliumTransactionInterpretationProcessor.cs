@@ -444,7 +444,7 @@ namespace Blockchains.Neuralium.Classes.NeuraliumChain.Processors.TransactionInt
 				decimal gain = electedEntry.bountyShare + electedEntry.tips;
 				snapshot.Balance += gain;
 
-				Log.Verbose($"We were elected in the block! We were allocated {electedEntry.bountyShare}N in bounty, {electedEntry.tips}N in tips for a total gain of {gain}N. Our new total is {snapshot.Balance}N");
+				Log.Information($"We were elected in the block! We were allocated {electedEntry.bountyShare}N in bounty, {electedEntry.tips}N in tips for a total gain of {gain}N. Our new total is {snapshot.Balance}N");
 			}
 		}
 	}

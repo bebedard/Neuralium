@@ -72,11 +72,11 @@ namespace Blockchains.Neuralium.Classes.NeuraliumChain.Providers {
 
 				if(certificate != null) {
 
-					if(certificate.CertificateType == AccreditationCertificateTypes.Instance.DELEGATE) {
+					if(certificate.CertificateType == AccreditationCertificateTypes.Instance.DELEGATE.Value) {
 
 						serviceFees = certificate.InfrastructureServiceFees;
 						allocation = 1 - serviceFees; // a delegate takes the full amount less service fees
-					} else if(certificate.CertificateType == AccreditationCertificateTypes.Instance.SDK_PROVIDER) {
+					} else if(certificate.CertificateType == AccreditationCertificateTypes.Instance.SDK_PROVIDER.Value) {
 						serviceFees = certificate.InfrastructureServiceFees;
 						allocation = Math.Min(Math.Abs(certificate.ProviderBountyshare), 1 - serviceFees); // here we determine the % they take
 					}

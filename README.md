@@ -1,6 +1,6 @@
 # Neuralium
 
-##### Version:  Trial run III
+##### Version:  Trial run IV
 
 The Neuralium crypto token console server node
 
@@ -15,7 +15,7 @@ The actual command line interface for the Server node.
 
 ## Build Instructions
 
-##### First, ensure dotnet core 2.2 SDK is installed
+##### First, ensure dotnet core 3.0 SDK is installed
 
 #### The first step is to ensure that the dependencies have been built and copied into the local-source folder.
 

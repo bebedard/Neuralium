@@ -93,8 +93,6 @@ namespace Blockchains.Neuralium.Classes.NeuraliumChain.Providers {
 			NeuraliumFinalElectionResultDistillate neuraliumFinalElectionContext = (NeuraliumFinalElectionResultDistillate) finalElectionResultDistillate;
 
 			this.centralCoordinator.PostSystemEvent(NeuraliumSystemEventGenerator.NeuraliumMiningPrimeElected(blockElectionDistillate.currentBlockId, neuraliumFinalElectionContext.BountyShare, neuraliumFinalElectionContext.TransactionTips, AccountId.FromString(neuraliumFinalElectionContext.DelegateAccountId)));
-
-			Log.Information($"We were officially announced as a prime elected in Block {blockElectionDistillate.currentBlockId} for the election that was announced in block {blockElectionDistillate.currentBlockId - neuraliumFinalElectionContext.BlockOffset}");
 		}
 
 		protected override MiningHistoryEntry CreateMiningHistoryEntry() {

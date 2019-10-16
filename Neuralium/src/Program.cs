@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using CommandLine;
-using Neuralium.Shell.Classes.Configuration;
-using Neuralium.Shell.Classes.Runtime;
+using Neuralium.Core.Classes.Configuration;
+using Neuralium.Core.Classes.Runtime;
 
 namespace Neuralium {
 	internal class Program {

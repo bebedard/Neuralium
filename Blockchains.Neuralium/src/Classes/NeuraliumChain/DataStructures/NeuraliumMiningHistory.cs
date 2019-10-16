@@ -1,9 +1,7 @@
-using MessagePack;
 using Neuralia.Blockchains.Common.Classes.Blockchains.Common.DataStructures.ExternalAPI;
 
 namespace Blockchains.Neuralium.Classes.NeuraliumChain.DataStructures {
 	
-	[MessagePackObject(keyAsPropertyName: true)]
 	public class NeuraliumMiningHistory : MiningHistory {
 		public decimal BountyShare { get; set; }
 		public decimal TransactionTips { get; set; }

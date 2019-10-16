@@ -437,7 +437,7 @@ namespace Blockchains.Neuralium.Classes.NeuraliumChain.Providers {
 			//TODO: merge correctly with base version of this method
 			if(this.WalletFileInfo.Accounts[accountUuid] is INeuraliumAccountFileInfo neuraliumAccountFileInfo) {
 
-				timelineHeader.FirstDay = neuraliumAccountFileInfo.WalletTimelineFileInfo.GetFirstDay().ToUniversalTime().ToString(CultureInfo.InvariantCulture);
+				timelineHeader.FirstDay = TimeService.FormatDateTimeStandardUtc(neuraliumAccountFileInfo.WalletTimelineFileInfo.GetFirstDay());
 				timelineHeader.NumberOfDays = neuraliumAccountFileInfo.WalletTimelineFileInfo.GetDaysCount();
 			}
 
@@ -455,12 +455,12 @@ namespace Blockchains.Neuralium.Classes.NeuraliumChain.Providers {
 			var results = new List<TimelineDay>();
 
 			if(this.WalletFileInfo.Accounts[accountUuid] is INeuraliumAccountFileInfo neuraliumAccountFileInfo) {
-				results.AddRange(neuraliumAccountFileInfo.WalletTimelineFileInfo.RunQuery<TimelineDay, NeuraliumWalletTimelineDay>(d => d.Where(t => t.Timestamp <= firstday).OrderByDescending(t => t.Timestamp).Skip(skip).Take(take).Select(e => new TimelineDay {Day = e.Timestamp.ToUniversalTime().ToString(CultureInfo.InvariantCulture), EndingTotal = e.Total, Id = e.Id}).ToList()));
+				results.AddRange(neuraliumAccountFileInfo.WalletTimelineFileInfo.RunQuery<TimelineDay, NeuraliumWalletTimelineDay>(d => d.Where(t => t.Timestamp <= firstday).OrderByDescending(t => t.Timestamp).Skip(skip).Take(take).Select(e => new TimelineDay {Day = TimeService.FormatDateTimeStandardUtc(e.Timestamp), EndingTotal = e.Total, Id = e.Id}).ToList()));
 
 				var dayIds = results.Select(d => d.Id).ToList();
 
 				var dayEntries = neuraliumAccountFileInfo.WalletTimelineFileInfo.RunQuery<TimelineDay.TimelineEntry, NeuraliumWalletTimeline>(d => d.Where(e => dayIds.Contains(e.DayId)).Select(e => new TimelineDay.TimelineEntry {
-					Timestamp = e.Timestamp.ToUniversalTime().ToString(CultureInfo.InvariantCulture), SenderAccountId = e.SenderAccountId?.ToString() ?? "", RecipientAccountId = e.RecipientAccountId?.ToString() ?? "", Amount = e.Amount,
+					Timestamp = TimeService.FormatDateTimeStandardUtc(e.Timestamp), SenderAccountId = e.SenderAccountId?.ToString() ?? "", RecipientAccountId = e.RecipientAccountId?.ToString() ?? "", Amount = e.Amount,
 					Tips = e.Tips, Total = e.Total, Direction = (byte) e.Direction, CreditType = (byte) e.CreditType,
 					Confirmed = e.Confirmed, DayId = e.DayId, TransactionId = e.TransactionId ?? ""
 				}).OrderByDescending(e => e.Timestamp).ToList());
