@@ -21,9 +21,9 @@ The actual command line interface for the Server node.
 
 ##### the source code to the below dependencies can be found here: [Neuralia Technologies source code](https://github.com/Neuralia) 
 
- - Neuralia.Blockchains.Tools
  - Neuralia.Data.HashFunction.xxHash
  - Neuralia.STUN
+ - Neuralia.Blockchains.Tools
  - Neuralia.BouncyCastle
  - Neuralia.Blockchains.Core
  - Neuralia.Blockchains.Common
