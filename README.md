@@ -4,7 +4,7 @@
 [![Build Status](http://jenkins.neuralium.com/buildStatus/icon?job=Neuralium.Node-Linux-Arm64&subject=Linux-ARM64)](http://jenkins.neuralium.com/job/Neuralium.Node-ARM64/)
 [![Build Status](http://jenkins.neuralium.com/buildStatus/icon?job=Neuralium.Node-Win64&subject=Windows-x64)](http://jenkins.neuralium.com/job/Neuralium.Node-Win64/)
 
-##### Version:  Trial run III
+##### Version:  Trial run IV
 
 The Neuralium crypto token console server node
 
@@ -19,15 +19,15 @@ The actual command line interface for the Server node.
 
 ## Build Instructions
 
-##### First, ensure dotnet core 2.2 SDK is installed
+##### First, ensure dotnet core 3.0 SDK is installed
 
 #### The first step is to ensure that the dependencies have been built and copied into the local-source folder.
 
 ##### the source code to the below dependencies can be found here: [Neuralia Technologies source code](https://github.com/Neuralia) 
 
- - Neuralia.Blockchains.Tools
  - Neuralia.Data.HashFunction.xxHash
  - Neuralia.STUN
+ - Neuralia.Blockchains.Tools
  - Neuralia.BouncyCastle
  - Neuralia.Blockchains.Core
  - Neuralia.Blockchains.Common

@@ -1,9 +1,7 @@
-using MessagePack;
 using Neuralia.Blockchains.Common.Classes.Blockchains.Common.DataStructures.ExternalAPI.Wallet;
 
 namespace Blockchains.Neuralium.Classes.NeuraliumChain.DataStructures {
 	
-	[MessagePackObject(keyAsPropertyName: true)]
 	public class NeuraliumWalletTransactionHistoryHeaderAPI : WalletTransactionHistoryHeaderAPI {
 		public decimal Amount { get; set; }
 		public decimal Tip { get; set; }
@@ -13,7 +11,6 @@ namespace Blockchains.Neuralium.Classes.NeuraliumChain.DataStructures {
 		}
 	}
 
-	[MessagePackObject(keyAsPropertyName: true)]
 	public class NeuraliumWalletTransactionHistoryDetailsAPI : WalletTransactionHistoryDetailsAPI {
 		public decimal Amount { get; set; }
 		public decimal Tip { get; set; }

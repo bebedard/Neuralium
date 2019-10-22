@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <NoWarn>NU1605</NoWarn>
+   <PropertyGroup>
         <TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
         <OutputType>Library</OutputType>
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
@@ -9,9 +8,10 @@
         <LangVersion>latest</LangVersion>
         <RootNamespace>Neuralium.Api.Common</RootNamespace>
         <AssemblyName>Neuralium.Api.Common</AssemblyName>
-        <TargetFrameworks>netstandard2.0;netcoreapp2.2</TargetFrameworks>
+        <TargetFrameworks>netstandard2.0;netcoreapp3.0</TargetFrameworks>
         
     </PropertyGroup>
+
 
     <ItemGroup>
       <PackageReference Include="Neuralia.Blockchains.Common" Version="1.0.0" />

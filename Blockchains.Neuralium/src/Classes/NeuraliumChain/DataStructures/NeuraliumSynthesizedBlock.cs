@@ -1,18 +1,15 @@
 using System.Collections.Generic;
-using MessagePack;
 using Neuralia.Blockchains.Common.Classes.Blockchains.Common.DataStructures;
 using Neuralia.Blockchains.Core.General.Types;
 
 namespace Blockchains.Neuralium.Classes.NeuraliumChain.DataStructures {
 
-	[MessagePackObject(keyAsPropertyName: true)]
 	public class NeuraliumSynthesizedBlock : SynthesizedBlock {
 
 		public override SynthesizedElectionResult CreateSynthesizedElectionResult() {
 			return new NeuraliumSynthesizedElectionResult();
 		}
 
-		[MessagePackObject(keyAsPropertyName: true)]
 		public class NeuraliumSynthesizedElectionResult : SynthesizedElectionResult {
 
 			public decimal InfrastructureServiceFees { get; set; }

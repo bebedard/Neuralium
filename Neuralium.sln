@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blockchains.Neuralium", "Bl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Neuralium.Api.Common", "Neuralium.Api.Common\Neuralium.Api.Common.csproj", "{372F66AF-BCA6-4526-98EE-9CCF45C00CDA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Neuralium.Shell", "Neuralium.Shell\src\Neuralium.Shell.csproj", "{8A72E9DF-6D59-456A-AB93-04DBE5D3157C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Neuralium.Core", "Neuralium.Core\src\Neuralium.Core.csproj", "{8A72E9DF-6D59-456A-AB93-04DBE5D3157C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Neuralium", "Neuralium\src\Neuralium.csproj", "{D9D4ED6B-D0D3-400C-8A24-D8D61B88C744}"
 EndProject

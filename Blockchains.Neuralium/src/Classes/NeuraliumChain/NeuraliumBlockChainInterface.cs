@@ -36,7 +36,7 @@ namespace Blockchains.Neuralium.Classes.NeuraliumChain {
 	}
 
 	public class NeuraliumBlockChainInterface : BlockChainInterface<INeuraliumCentralCoordinator, INeuraliumChainComponentProvider>, INeuraliumBlockChainInterface {
-		public NeuraliumBlockChainInterface(INeuraliumCentralCoordinator coordinator) : base(coordinator) {
+		public NeuraliumBlockChainInterface(INeuraliumCentralCoordinator coordinator, TimeSpan? taskCheckSpan = null) : base(coordinator, taskCheckSpan) {
 		}
 
 		protected INeuraliumChainFactoryProvider NeuraliumChainFactoryProvider => (INeuraliumChainFactoryProvider) this.centralCoordinator.ChainComponentProvider.ChainFactoryProviderBase;

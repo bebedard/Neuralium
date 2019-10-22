@@ -1,6 +1,8 @@
 {
   "AppSettings": {
-    
+    "port": 33888,
+    "rpcPort": 12033,
+    "EnableHubs": false,
     "NeuraliumChainConfiguration" : {
      
     },
@@ -21,7 +23,7 @@
     }
   },
   "Serilog": {
-    "Using":  ["Serilog.Sinks.Console", "Neuralium.Shell"],
+    "Using":  ["Serilog.Sinks.Console", "Neuralium.Core"],
     "MinimumLevel":{
       "Default": "Information",
       "Override": {

@@ -12,7 +12,7 @@ namespace Blockchains.Neuralium.Classes.NeuraliumChain.Wallet.Account {
 
 	public class NeuraliumWalletAccount : WalletAccount, INeuraliumWalletAccount {
 
-		public EncryptorParameters NeuraliumTimelineFileEncryptionParameters { get; set; }
+		public IEncryptorParameters NeuraliumTimelineFileEncryptionParameters { get; set; }
 		public ByteArray NeuraliumTimelineFileSecret { get; set; }
 
 		public override void InitializeNewEncryptionParameters(BlockchainServiceSet serviceSet) {

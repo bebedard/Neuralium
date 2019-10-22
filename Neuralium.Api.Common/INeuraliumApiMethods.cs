@@ -27,6 +27,7 @@ namespace Neuralium.Api.Common {
 		Task<object> BackupWallet(ushort chainType);
 
 		Task<int> QueryTotalConnectedPeersCount();
+		Task<bool> QueryMiningPortConnectable();
 		Task<object> QueryChainStatus(ushort chainType);
 		Task<object> QueryBlockChainInfo(ushort chainType);
 		Task<bool> IsWalletLoaded(ushort chainType);
